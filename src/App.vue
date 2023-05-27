@@ -1,19 +1,19 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { RouterView, useRouter } from 'vue-router'
-import { currentUser, signIn } from './api'
+import { currentUser } from './api'
 import HelloWorld from './components/HelloWorld.vue'
 const router = useRouter()
 
 import { routeNames } from '@/router/routes'
 
 onMounted(() => {
+  console.log(currentUser)
   if (!currentUser) {
-    signIn().then(() => {
-      router.push(routeNames.HOME.path)
-    })
+    router.push(routeNames.LOGIN.path)
+  } else {
+    router.push(routeNames.HOME.path)
   }
-  router.push(routeNames.HOME.path)
 })
 </script>
 

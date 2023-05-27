@@ -21,6 +21,7 @@ const signIn = async (): Promise<User> => {
     // IdP data available using getAdditionalUserInfo(result)
     // ...
     const { uid, email, displayName, photoURL } = user;
+    currentUser = auth.currentUser
     return Promise.resolve({ uid, email, displayName, photoURL });
   } catch (error: any) {
     // Handle Errors here.
@@ -34,6 +35,6 @@ const signIn = async (): Promise<User> => {
   }
 };
 
-const currentUser = auth.currentUser
+let currentUser = auth.currentUser
 
 export { signIn, currentUser };
