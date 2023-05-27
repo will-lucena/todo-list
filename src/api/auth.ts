@@ -1,10 +1,12 @@
 // Import the functions you need from the SDKs you need
 import type { User } from "@/models";
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, browserLocalPersistence, getAuth, setPersistence, signInWithPopup } from "firebase/auth";
 
 import { app } from "./setup";
 const auth = getAuth(app);
 auth.useDeviceLanguage();
+
+await setPersistence(auth, browserLocalPersistence)
 
 const provider = new GoogleAuthProvider();
 
@@ -32,4 +34,6 @@ const signIn = async (): Promise<User> => {
   }
 };
 
-export { signIn };
+const currentUser = auth.currentUser
+
+export { signIn, currentUser };

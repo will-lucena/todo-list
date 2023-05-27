@@ -1,4 +1,4 @@
-export { signIn } from "./auth";
+export { currentUser, signIn } from "./auth";
 // export {
 //   addToCollection,
 //   getCollection,

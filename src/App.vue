@@ -1,12 +1,19 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import { RouterLink, RouterView } from 'vue-router'
-import { signIn } from './api'
+import { RouterView, useRouter } from 'vue-router'
+import { currentUser, signIn } from './api'
 import HelloWorld from './components/HelloWorld.vue'
+const router = useRouter()
 
-onMounted(async () => {
-  const response = await signIn()
-  console.log(response)
+import { routeNames } from '@/router/routes'
+
+onMounted(() => {
+  if (!currentUser) {
+    signIn().then(() => {
+      router.push(routeNames.HOME.path)
+    })
+  }
+  router.push(routeNames.HOME.path)
 })
 </script>
 
@@ -16,11 +23,6 @@ onMounted(async () => {
 
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
     </div>
   </header>
 
