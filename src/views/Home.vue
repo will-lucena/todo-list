@@ -1,30 +1,27 @@
 <template>
-  {{ pageText }}
+  <Header></Header>
 
-  <ul>
-    <li v-for="item in data" :key="item.key">
-      <input type="checkbox" :checked="item.completed" />
-      <label for="">{{ item.label }}</label>
-    </li>
-  </ul>
+  <List :items="data"></List>
+
+  <RouterView></RouterView>
 </template>
 
 <script setup lang="ts">
 import { currentUser, getCollection } from '@/api'
+import Header from '@/components/Header.vue'
+import List from '@/components/List.vue'
 import type { TodoListItem } from '@/models'
 import { onMounted, reactive } from 'vue'
 
-let pageText = 'opa amigo'
 let data = reactive(new Array<TodoListItem>())
 
 onMounted(() => {
   if (currentUser) {
+    console.log(currentUser)
     getCollection(currentUser.uid).then((res) => {
       console.log(res)
       data.push(...res)
     })
-  } else {
-    pageText = 'deu ruim parceiro'
   }
 })
 </script>
