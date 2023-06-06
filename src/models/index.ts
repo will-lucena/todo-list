@@ -12,4 +12,9 @@ interface User {
   photoURL?: string | null;
 }
 
-export type { TodoListItem, User };
+interface onChangeItemPayload {
+  index: number
+  value: boolean
+}
+
+export type { TodoListItem, User, onChangeItemPayload };

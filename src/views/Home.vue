@@ -1,7 +1,7 @@
 <template>
   <Header></Header>
 
-  <List :items="data"></List>
+  <List :items="data" @on-change="onChangeItem"></List>
 
   <RouterView></RouterView>
 </template>
@@ -10,16 +10,19 @@
 import { currentUser, getCollection } from '@/api'
 import Header from '@/components/Header.vue'
 import List from '@/components/List.vue'
-import type { TodoListItem } from '@/models'
+import type { TodoListItem, onChangeItemPayload } from '@/models'
 import { onMounted, reactive } from 'vue'
 
-let data = reactive(new Array<TodoListItem>())
+let data: Array<TodoListItem> = reactive([])
+
+function onChangeItem(payload: onChangeItemPayload) {
+  data[payload.index].completed = payload.value
+  Object.assign(data[payload.index], { completed: payload.value })
+}
 
 onMounted(() => {
   if (currentUser) {
-    console.log(currentUser)
     getCollection(currentUser.uid).then((res) => {
-      console.log(res)
       data.push(...res)
     })
   }
