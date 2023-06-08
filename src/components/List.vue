@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { addToCollection } from '@/api'
-import type { onChangeItemPayload, TodoListItem } from '@/models'
+import type { onChangeItemPayload } from '@/models'
+import { TodoListItem } from '@/models'
 
 const props = defineProps<{
   items: Array<TodoListItem>

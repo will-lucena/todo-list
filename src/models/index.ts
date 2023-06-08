@@ -1,8 +1,19 @@
-interface TodoListItem {
-  label: string;
-  completed?: boolean;
-  key: string;
-  sharedWith?: Array<string>;
+class TodoListItem {
+  label: string
+  key: string
+  completed?: boolean
+  sharedWith?: Array<string>
+
+  constructor(
+    label: string,
+    key?: string,
+    completed?: boolean,
+    sharedWith?: Array<string>){
+    this.label = label
+    this.key = key || Date.now().toString()
+    this.completed = completed
+    this.sharedWith = sharedWith
+  }
 }
 
 class User {
@@ -12,7 +23,8 @@ class User {
   displayName?: string | null;
   photoURL?: string | null;
 
-  constructor(uid: string, email: string, displayName?: string | null, photoURL?: string | null, friends?: Array<string> | null){
+  constructor(uid: string, email: string, displayName?: string | null, 
+    photoURL?: string | null, friends?: Array<string> | null){
     this.uid = uid
     this.friends = friends || []
     this.email = email
@@ -40,8 +52,9 @@ interface onChangeItemPayload {
   value: boolean
 }
 
-export type { TodoListItem, onChangeItemPayload };
+export type { onChangeItemPayload }
 export {
+  TodoListItem,
   User
-};
+}
 

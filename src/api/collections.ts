@@ -1,4 +1,4 @@
-import type { TodoListItem, User } from "@/models";
+import { TodoListItem, User } from "@/models";
 import {
   collection,
   deleteDoc,
