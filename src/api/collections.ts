@@ -16,7 +16,7 @@ const db = getFirestore(app);
 
 const addToCollection = async (item: TodoListItem) => {
   const payload = sanitizeObject(item);
-  const collectionId = currentUser!.uid
+  const collectionId = currentUser!.email!
   await setDoc(doc(db, collectionId, item.key), payload);
 };
 
@@ -48,16 +48,16 @@ const getCollection = async (collectionId: string) => {
 };
 
 const removeFromCollection = async (key: string) => {
-  const collectionId = currentUser!.uid
+  const collectionId = currentUser!.email!
   await deleteDoc(doc(db, collectionId, key));
 };
 
 const upsertUsersBase = async (user: User) => {
-  await setDoc(doc(db, "users", user.uid!), user);
+  await setDoc(doc(db, "users", user.email!), user);
 };
 
-const getFriends = async (uid: string) => {
-  const q = query(collection(db, "users"), where("uid", "==", uid));
+const getFriends = async (email: string) => {
+  const q = query(collection(db, "users"), where("email", "==", email));
   const querySnapshot = await getDocs(q);
 
   const docs = new Array<string>();

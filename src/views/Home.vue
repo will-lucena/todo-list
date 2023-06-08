@@ -22,7 +22,7 @@ function onChangeItem(payload: onChangeItemPayload) {
 
 onMounted(() => {
   if (currentUser) {
-    getCollection(currentUser.uid).then((res) => {
+    getCollection(currentUser.email!).then((res) => {
       data.push(...res)
     })
   }
