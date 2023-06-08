@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { currentUser } from '@/api'
+import { addFriend } from '@/api/collections'
+import { useUserStore } from '@/stores/user'
 import { ref } from 'vue'
 
 const profileImage = ref(currentUser?.photoURL || '')
@@ -10,7 +12,14 @@ let showAddContactForm = ref(false)
 let emailToAdd = ref('')
 const tab = ref(0)
 
-const rules = [() => true]
+const rules = [
+  (value: any) => {
+    if (/^[a-z.-]+@[a-z.-]+\.[a-z]+$/i.test(value)) {
+      return true
+    }
+    return 'Email obrigatório'
+  }
+]
 let loading = ref(false)
 
 function onClickProfile() {
@@ -21,9 +30,13 @@ function onClickAddContact() {
   showAddContactForm.value = !showAddContactForm.value
 }
 
-function submit($event: Event) {
+async function submit() {
   loading.value = true
-  console.log($event)
+  await addFriend(emailToAdd.value, useUserStore().user)
+  showProfileMenu.value = false
+  showAddContactForm.value = false
+  emailToAdd.value = ''
+
   loading.value = false
 }
 </script>
@@ -50,7 +63,7 @@ function submit($event: Event) {
 
           <div class="d-flex flex-row flex-wrap">
             <v-btn :loading="loading" type="submit" block class="mt-2" text="Adicionar"></v-btn>
-            <v-btn :loading="loading" type="submit" block class="mt-2" text="Cancelar"></v-btn>
+            <v-btn :loading="loading" type="reset" block class="mt-2" text="Cancelar"></v-btn>
           </div>
         </v-form>
       </v-sheet>

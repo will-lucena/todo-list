@@ -53,7 +53,7 @@ const removeFromCollection = async (key: string) => {
 };
 
 const upsertUsersBase = async (user: User) => {
-  await setDoc(doc(db, "users", user.email!), user);
+  await setDoc(doc(db, "users", user.email!), user.toObject());
 };
 
 const getFriends = async (email: string) => {
@@ -70,10 +70,18 @@ const getFriends = async (email: string) => {
   return docs;
 };
 
+const addFriend = async(email: string, user: User) => {
+  let array = new Array<string>().concat(user.friends!)
+  array = [...array, email]
+  Object.assign(user, {friends: array})
+  await setDoc(doc(db, "users", currentUser!.email!), user.toObject());
+}
+
 export {
   addToCollection,
   getCollection,
   removeFromCollection,
   upsertUsersBase,
   getFriends,
+  addFriend
 };

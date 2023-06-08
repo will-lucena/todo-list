@@ -1,7 +1,8 @@
 // Import the functions you need from the SDKs you need
-import type { User } from "@/models";
+import { User } from "@/models";
 import { GoogleAuthProvider, browserLocalPersistence, getAuth, setPersistence, signInWithPopup } from "firebase/auth";
 
+import { upsertUsersBase } from '.';
 import { app } from "./setup";
 const auth = getAuth(app);
 auth.useDeviceLanguage();
@@ -17,12 +18,15 @@ const signIn = async (): Promise<User> => {
     const credential = GoogleAuthProvider.credentialFromResult(result);
     const token = credential?.accessToken;
     // The signed-in user info.
-    const user = result.user;
+    const firebaseUser = result.user;
     // IdP data available using getAdditionalUserInfo(result)
     // ...
-    const { uid, email, displayName, photoURL } = user;
+    const { uid, email, displayName, photoURL } = firebaseUser;
     currentUser = auth.currentUser
-    return Promise.resolve({ uid, email, displayName, photoURL });
+
+    const user = new User(uid, email!, displayName, photoURL)
+    upsertUsersBase(user)
+    return Promise.resolve(user);
   } catch (error: any) {
     // Handle Errors here.
     const errorCode = error.code;
