@@ -39,7 +39,7 @@ const signIn = async (): Promise<User> => {
 
     useUserStore().updateUser(localUser)
 
-    upsertUsersBase(user)
+    upsertUsersBase(localUser)
     return Promise.resolve(user);
   } catch (error: any) {
     // Handle Errors here.
