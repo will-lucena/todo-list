@@ -1,8 +1,9 @@
 // Import the functions you need from the SDKs you need
 import { User } from "@/models";
-import { GoogleAuthProvider, browserLocalPersistence, getAuth, setPersistence, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, browserLocalPersistence, signOut as firebaseSignOut, getAuth, setPersistence, signInWithPopup } from "firebase/auth";
 
-import { upsertUsersBase } from '.';
+import { useUserStore } from '@/stores/user';
+import { getFriends, upsertUsersBase } from '.';
 import { app } from "./setup";
 const auth = getAuth(app);
 auth.useDeviceLanguage();
@@ -25,6 +26,19 @@ const signIn = async (): Promise<User> => {
     currentUser = auth.currentUser
 
     const user = new User(uid, email!, displayName, photoURL)
+
+    const friends = await getFriends(email!)
+    
+    const localUser = new User(
+      uid,
+      email!,
+      displayName,
+      photoURL,
+      friends
+    )
+
+    useUserStore().updateUser(localUser)
+
     upsertUsersBase(user)
     return Promise.resolve(user);
   } catch (error: any) {
@@ -39,6 +53,16 @@ const signIn = async (): Promise<User> => {
   }
 };
 
+const signOut = async(): Promise<boolean> => {
+  try {
+    await firebaseSignOut(auth)
+    return Promise.resolve(true)
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
+
 let currentUser = auth.currentUser
 
-export { signIn, currentUser };
+export { signIn, currentUser, signOut };

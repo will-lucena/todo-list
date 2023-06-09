@@ -1,5 +1,5 @@
 <template>
-  <Header></Header>
+  <Header @sign-out="onSignOut"></Header>
 
   <List :items="data" @on-change="onChangeItem"></List>
 
@@ -20,8 +20,11 @@ import List from '@/components/List.vue'
 import ModalCreateTask from '@/components/ModalCreateTask.vue'
 import type { onChangeItemPayload } from '@/models'
 import { TodoListItem } from '@/models'
+import { routeNames } from '@/router/routes'
 import { useUserStore } from '@/stores/user'
 import { onMounted, reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 
 let data: Array<TodoListItem> = reactive([])
 let newTaskTitle = ref('')
@@ -36,6 +39,10 @@ function onChangeItem(payload: onChangeItemPayload) {
 function onClickCreate() {
   const task = new TodoListItem(newTaskTitle.value)
   addToCollection(task)
+}
+
+function onSignOut() {
+  router.push(routeNames.LOGIN.path)
 }
 
 onMounted(() => {

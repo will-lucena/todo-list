@@ -1,8 +1,13 @@
 <script setup lang="ts">
 import { currentUser } from '@/api'
+import { signOut } from '@/api/auth'
 import { addFriend } from '@/api/collections'
 import { useUserStore } from '@/stores/user'
 import { ref } from 'vue'
+
+const emit = defineEmits<{
+  (e: 'signOut'): void
+}>()
 
 const profileImage = ref(currentUser?.photoURL || '')
 const userName = ref(currentUser?.displayName || '')
@@ -39,6 +44,11 @@ async function submit() {
 
   loading.value = false
 }
+
+async function onClickSignOut() {
+  await signOut()
+  emit('signOut')
+}
 </script>
 
 <template>
@@ -49,6 +59,7 @@ async function submit() {
 
       <ul>
         <li @click="onClickAddContact">Adicionar contato</li>
+        <li @click="onClickSignOut">Desconectar</li>
       </ul>
 
       <form @submit.prevent="submit">
