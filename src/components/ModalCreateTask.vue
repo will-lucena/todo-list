@@ -10,10 +10,10 @@ defineProps<{
 
 let title = ref('')
 let sharedWith = ref(Array<string>())
-let groups = ref(Array<string>())
+let selectedGroup = ref('')
 
 function submit() {
-  const item = new TodoListItem(title.value, [...sharedWith.value])
+  const item = new TodoListItem(title.value, [...sharedWith.value], selectedGroup.value)
   addToCollection(item)
 }
 </script>
@@ -27,7 +27,7 @@ function submit() {
           {{ email }}
         </option>
       </select>
-      <select v-model="groups" multiple>
+      <select v-model="selectedGroup">
         <option v-for="group in availableGroups" :value="group" :key="group">
           {{ group }}
         </option>

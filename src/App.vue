@@ -5,6 +5,7 @@ import { currentUser, getFriends } from './api'
 const router = useRouter()
 
 import { routeNames } from '@/router/routes'
+import { getTaskGroups } from './api/collections'
 import { User } from './models'
 import { useUserStore } from './stores/user'
 
@@ -15,12 +16,14 @@ onMounted(async () => {
     router.push(routeNames.LOGIN.path)
   } else {
     const friends = await getFriends(currentUser.email!)
+    const taskGroups = await getTaskGroups(currentUser.email!)
     const user = new User(
       currentUser.uid,
       currentUser.email!,
       currentUser.displayName,
       currentUser.photoURL,
-      friends
+      friends,
+      taskGroups
     )
     userStore.updateUser(user)
     router.push(routeNames.HOME.path)

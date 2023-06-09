@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { currentUser } from '@/api'
 import { signOut } from '@/api/auth'
-import { addFriend } from '@/api/collections'
 import { useUserStore } from '@/stores/user'
 import { ref } from 'vue'
 
@@ -14,8 +13,13 @@ const userName = ref(currentUser?.displayName || '')
 
 let showProfileMenu = ref(false)
 let showAddContactForm = ref(false)
+let showGroupCreationForm = ref(false)
+
 let emailToAdd = ref('')
+let groupToCreate = ref('')
 const tab = ref(0)
+
+const user = useUserStore()
 
 const rules = [
   (value: any) => {
@@ -35,9 +39,13 @@ function onClickAddContact() {
   showAddContactForm.value = !showAddContactForm.value
 }
 
-async function submit() {
+function onClickCreateGroup() {
+  showGroupCreationForm.value = !showGroupCreationForm.value
+}
+
+async function friendFormSubmit() {
   loading.value = true
-  await addFriend(emailToAdd.value, useUserStore().user)
+  await user.addFriend(emailToAdd.value)
   showProfileMenu.value = false
   showAddContactForm.value = false
   emailToAdd.value = ''
@@ -49,6 +57,10 @@ async function onClickSignOut() {
   await signOut()
   emit('signOut')
 }
+
+function groupFormSubmit() {
+  user.addGroup(groupToCreate.value)
+}
 </script>
 
 <template>
@@ -59,12 +71,23 @@ async function onClickSignOut() {
 
       <ul>
         <li @click="onClickAddContact">Adicionar contato</li>
+        <li @click="onClickCreateGroup">Criar grupo</li>
         <li @click="onClickSignOut">Desconectar</li>
       </ul>
 
-      <form @submit.prevent="submit">
+      <form v-if="showAddContactForm" @submit.prevent="friendFormSubmit">
         <label for="email">Email</label>
         <input type="text" v-model="emailToAdd" name="email" />
+
+        <div>
+          <button type="submit">Adicionar</button>
+          <button type="reset">Cancelar</button>
+        </div>
+      </form>
+
+      <form v-if="showGroupCreationForm" @submit.prevent="groupFormSubmit">
+        <label for="groupName">Nome do grupo</label>
+        <input type="text" v-model="groupToCreate" name="groupName" />
 
         <div>
           <button type="submit">Adicionar</button>

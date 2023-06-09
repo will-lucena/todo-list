@@ -8,7 +8,10 @@
     <button @click="onClickCreate">create</button>
   </div>
 
-  <ModalCreateTask :friends="userStore.user.friends" :available-groups="[]" />
+  <ModalCreateTask
+    :friends="userStore.user.getFriends()"
+    :available-groups="userStore.user.getTaskGroups()"
+  />
 
   <RouterView></RouterView>
 </template>

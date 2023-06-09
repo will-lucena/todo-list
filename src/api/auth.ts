@@ -3,7 +3,8 @@ import { User } from "@/models";
 import { GoogleAuthProvider, browserLocalPersistence, signOut as firebaseSignOut, getAuth, setPersistence, signInWithPopup } from "firebase/auth";
 
 import { useUserStore } from '@/stores/user';
-import { getFriends, upsertUsersBase } from '.';
+import { getFriends } from '.';
+import { getTaskGroups } from './collections';
 import { app } from "./setup";
 const auth = getAuth(app);
 auth.useDeviceLanguage();
@@ -28,18 +29,18 @@ const signIn = async (): Promise<User> => {
     const user = new User(uid, email!, displayName, photoURL)
 
     const friends = await getFriends(email!)
+    const taskGroups = await getTaskGroups(email!)
     
     const localUser = new User(
       uid,
       email!,
       displayName,
       photoURL,
-      friends
+      friends,
+      taskGroups
     )
 
     useUserStore().updateUser(localUser)
-
-    upsertUsersBase(localUser)
     return Promise.resolve(user);
   } catch (error: any) {
     // Handle Errors here.

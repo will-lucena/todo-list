@@ -53,7 +53,7 @@ const removeFromCollection = async (key: string) => {
 };
 
 const upsertUsersBase = async (user: User) => {
-  await setDoc(doc(db, "users", user.email!), user.toObject());
+  await setDoc(doc(db, "users", user.getUserEmail()), user.toObject());
 };
 
 const getFriends = async (email: string) => {
@@ -70,12 +70,19 @@ const getFriends = async (email: string) => {
   return docs;
 };
 
-const addFriend = async(email: string, user: User) => {
-  let array = new Array<string>().concat(user.friends!)
-  array = [...array, email]
-  Object.assign(user, {friends: array})
-  await setDoc(doc(db, "users", currentUser!.email!), user.toObject());
-}
+const getTaskGroups = async (email: string) => {
+  const q = query(collection(db, "users"), where("email", "==", email));
+  const querySnapshot = await getDocs(q);
+
+  const docs = new Array<string>();
+
+  querySnapshot.forEach((doc) => {
+    doc.data().taskGroups?.forEach((taskGroup: string) => {
+      docs.push(taskGroup);
+    });
+  });
+  return docs;
+};
 
 export {
   addToCollection,
@@ -83,5 +90,5 @@ export {
   removeFromCollection,
   upsertUsersBase,
   getFriends,
-  addFriend
+  getTaskGroups
 };

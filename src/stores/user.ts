@@ -1,3 +1,4 @@
+import { upsertUsersBase } from '@/api'
 import { User } from '@/models'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
@@ -7,7 +8,19 @@ export const useUserStore = defineStore('user', () => {
 
   function updateUser(payload: User) {
     Object.assign(user.value, payload)
+    upsertUsersBase(user.value.getUserCopy())
   }
 
-  return { user: user.value, updateUser }
+  async function addFriend(friendEmail: string){
+    user.value.addFriend(friendEmail)
+    await upsertUsersBase(user.value.getUserCopy())
+  }
+
+  async function addGroup(groupName: string){
+    user.value.addGroup(groupName)
+    console.log(user.value.getUserCopy())
+    await upsertUsersBase(user.value.getUserCopy())
+  }
+
+  return { user: user.value, updateUser, addFriend, addGroup }
 })
