@@ -1,36 +1,16 @@
-<template>
-  <Header @sign-out="onSignOut"></Header>
-
-  <List :items="data" @on-change="onChangeItem"></List>
-
-  <div>
-    <input type="text" v-model="newTaskTitle" />
-    <button @click="onClickCreate">create</button>
-  </div>
-
-  <ModalCreateTask
-    :friends="userStore.user.getFriends()"
-    :available-groups="userStore.user.getTaskGroups()"
-  />
-
-  <RouterView></RouterView>
-</template>
-
 <script setup lang="ts">
 import { addToCollection, currentUser, getCollection } from '@/api'
-import Header from '@/components/Header.vue'
-import List from '@/components/List.vue'
-import ModalCreateTask from '@/components/ModalCreateTask.vue'
+import ModalCreateTask from '@/components/atoms/ModalCreateTask.vue'
+import Header from '@/components/molecules/Header.vue'
+import List from '@/components/molecules/List.vue'
 import type { onChangeItemPayload } from '@/models'
 import { TodoListItem } from '@/models'
-import { routeNames } from '@/router/routes'
 import { useUserStore } from '@/stores/user'
-import { onMounted, reactive, ref } from 'vue'
-import { useRouter } from 'vue-router'
-const router = useRouter()
+import { computed, onMounted, reactive, ref } from 'vue'
 
 let data: Array<TodoListItem> = reactive([])
 let newTaskTitle = ref('')
+let showModalCreateTask = ref(false)
 
 const userStore = useUserStore()
 
@@ -44,9 +24,9 @@ function onClickCreate() {
   addToCollection(task)
 }
 
-function onSignOut() {
-  router.push(routeNames.LOGIN.path)
-}
+const detailedTaskButtonLabel = computed(() => {
+  return showModalCreateTask.value ? 'Fechar' : 'Criar tarefa compartilhada'
+})
 
 onMounted(() => {
   if (currentUser) {
@@ -56,3 +36,28 @@ onMounted(() => {
   }
 })
 </script>
+
+<template>
+  <Header></Header>
+
+  <List :items="data" @on-change="onChangeItem"></List>
+
+  <div>
+    <input type="text" v-model="newTaskTitle" />
+    <button @click="onClickCreate">Criar tarefa</button>
+  </div>
+
+  <footer>
+    <button @click="showModalCreateTask = !showModalCreateTask">
+      {{ detailedTaskButtonLabel }}
+    </button>
+  </footer>
+
+  <ModalCreateTask
+    v-if="showModalCreateTask"
+    :friends="userStore.user.getFriends()"
+    :available-groups="userStore.user.getTaskGroups()"
+  />
+
+  <RouterView></RouterView>
+</template>
