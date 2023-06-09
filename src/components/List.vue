@@ -18,16 +18,18 @@ function onChange(value: any, index: number) {
 </script>
 
 <template>
-  <v-list lines="one">
-    <v-list-item v-for="(item, index) in items" :key="item.key">
-      <v-checkbox
-        :model-value="item.completed"
-        :label="item.label"
+  <ul>
+    <li v-for="(item, index) in items" :key="item.key">
+      <input
+        type="checkbox"
+        :name="item.key"
+        :checked="item.completed"
         :class="{ done: item.completed }"
         @change="onChange($event, index)"
-      ></v-checkbox>
-    </v-list-item>
-  </v-list>
+      />
+      <label :for="item.key">{{ item.label }}</label>
+    </li>
+  </ul>
 </template>
 
 <style lang="scss" scoped>
