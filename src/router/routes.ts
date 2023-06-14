@@ -6,6 +6,14 @@ export const routeNames = {
     HOME: {
       path: '/home',
       name: 'Home'
+    },
+    TASKS: {
+      path: '/home/tasks',
+      name: 'Tasks'
+    },
+    TASK_GROUPS: {
+      path: '/home/taskGroups',
+      name: 'TaskGroups'
     }
 }
 
@@ -16,6 +24,16 @@ export const routes = [
     },
     {
       ...routeNames.HOME,
-      component: () => import('@/views/Home.vue')
+      component: () => import('@/views/Home.vue'),
+      children: [
+        {
+          ...routeNames.TASKS,
+          component: () => import('@/views/List.vue')
+        },
+        {
+          ...routeNames.TASK_GROUPS,
+          component: () => import('@/views/TaskGroups.vue')
+        }
+      ]
     }
   ]

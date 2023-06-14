@@ -1,46 +1,34 @@
 <script setup lang="ts">
-import { addToCollection, currentUser, getCollection } from '@/api'
+import { addToCollection } from '@/api'
 import ModalCreateTask from '@/components/atoms/ModalCreateTask.vue'
 import Header from '@/components/molecules/Header.vue'
-import List from '@/components/molecules/List.vue'
-import type { onChangeItemPayload } from '@/models'
 import { TodoListItem } from '@/models'
 import { useUserStore } from '@/stores/user'
-import { computed, onMounted, reactive, ref } from 'vue'
+import { computed, ref } from 'vue'
+import { RouterView, useRouter } from 'vue-router'
 
-let data: Array<TodoListItem> = reactive([])
 let newTaskTitle = ref('')
 let showModalCreateTask = ref(false)
+const router = useRouter()
 
 const userStore = useUserStore()
-
-function onChangeItem(payload: onChangeItemPayload) {
-  data[payload.index].completed = payload.value
-  Object.assign(data[payload.index], { completed: payload.value })
-}
 
 function onClickCreate() {
   const task = new TodoListItem(newTaskTitle.value)
   addToCollection(task)
 }
 
+function onNavigate(page: string) {
+  router.push(page)
+}
+
 const detailedTaskButtonLabel = computed(() => {
   return showModalCreateTask.value ? 'Fechar' : 'Criar tarefa compartilhada'
-})
-
-onMounted(() => {
-  if (currentUser) {
-    getCollection(currentUser.email!).then((res) => {
-      data.push(...res)
-    })
-  }
 })
 </script>
 
 <template>
-  <Header></Header>
-
-  <List :items="data" @on-change="onChangeItem"></List>
+  <Header @navigate="onNavigate"></Header>
 
   <div>
     <input type="text" v-model="newTaskTitle" />
