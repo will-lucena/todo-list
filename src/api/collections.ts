@@ -36,12 +36,13 @@ const getCollection = async (collectionId: string) => {
   const querySnapshot = await getDocs(q);
   const docs = new Array<TodoListItem>();
   querySnapshot.forEach((doc) => {
-    const { key, label, completed, sharedWith } = doc.data();
+    const { key, label, completed, sharedWith, taskGroup } = doc.data();
     docs.push({
       key,
       label,
       completed,
       sharedWith,
+      taskGroup
     });
   });
   return docs;
@@ -86,9 +87,7 @@ const getTaskGroups = async (email: string) => {
 
 export {
   addToCollection,
-  getCollection,
-  removeFromCollection,
-  upsertUsersBase,
-  getFriends,
-  getTaskGroups
+  getCollection, getFriends,
+  getTaskGroups, removeFromCollection,
+  upsertUsersBase
 };

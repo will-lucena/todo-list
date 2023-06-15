@@ -12,7 +12,11 @@ const emit = defineEmits<{
 }>()
 
 function onChange(value: any, index: number) {
-  addToCollection(Object.assign(props.items[index], { completed: value.target?.checked || false }))
+  addToCollection(
+    Object.assign(props.items[index], {
+      completed: value.target?.checked || false
+    })
+  )
   emit('onChange', { index, value: value.target?.checked })
 }
 </script>

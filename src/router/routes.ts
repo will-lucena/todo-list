@@ -8,11 +8,11 @@ export const routeNames = {
       name: 'Home'
     },
     TASKS: {
-      path: '/home/tasks',
+      path: '/home/tasks/:taskGroupId',
       name: 'Tasks'
     },
     TASK_GROUPS: {
-      path: '/home/taskGroups',
+      path: '/home/taskGroups/',
       name: 'TaskGroups'
     }
 }
@@ -28,7 +28,8 @@ export const routes = [
       children: [
         {
           ...routeNames.TASKS,
-          component: () => import('@/views/List.vue')
+          component: () => import('@/views/List.vue'),
+          props: true
         },
         {
           ...routeNames.TASK_GROUPS,

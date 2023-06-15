@@ -14,12 +14,12 @@ const router = useRouter()
 const userStore = useUserStore()
 
 function onClickCreate() {
-  const task = new TodoListItem(newTaskTitle.value)
+  const task = new TodoListItem(newTaskTitle.value, undefined, 'privadas')
   addToCollection(task)
 }
 
-function onNavigate(page: string) {
-  router.push(page)
+function onNavigate(page: string, params: any) {
+  router.push({ name: page, params })
 }
 
 const detailedTaskButtonLabel = computed(() => {

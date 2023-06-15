@@ -18,7 +18,6 @@ export const useUserStore = defineStore('user', () => {
 
   async function addGroup(groupName: string){
     user.value.addGroup(groupName)
-    console.log(user.value.getUserCopy())
     await upsertUsersBase(user.value.getUserCopy())
   }
 

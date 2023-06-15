@@ -6,7 +6,7 @@ import { routeNames } from '@/router/routes'
 import { ref } from 'vue'
 
 const emit = defineEmits<{
-  (e: 'navigate', page: string): void
+  (e: 'navigate', page: string, params: any): void
 }>()
 
 const profileImage = ref(currentUser?.photoURL || '')
@@ -18,8 +18,8 @@ function onClickProfile() {
   showProfileMenu.value = !showProfileMenu.value
 }
 
-function onClickNavigate(event: string) {
-  emit('navigate', event)
+function onClickNavigate(event: string, params: any) {
+  emit('navigate', event, params)
 }
 </script>
 
@@ -35,8 +35,8 @@ function onClickNavigate(event: string) {
       <img :src="profileImage" @click="onClickProfile" referrerpolicy="no-referrer" />
     </main>
     <ul class="tabs">
-      <li @click="onClickNavigate(routeNames.TASKS.path)">Tarefas</li>
-      <li @click="onClickNavigate(routeNames.TASK_GROUPS.path)">Grupos</li>
+      <li @click="onClickNavigate(routeNames.TASKS.name, { taskGroupId: 0 })">Tarefas</li>
+      <li @click="onClickNavigate(routeNames.TASK_GROUPS.name, null)">Grupos</li>
     </ul>
   </div>
 </template>

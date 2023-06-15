@@ -1,9 +1,15 @@
 <script setup lang="ts">
 import { currentUser, getCollection } from '@/api'
-import List from '@/components/molecules/List.vue'
+import TodoItemList from '@/components/molecules/TodoItemList.vue'
 import type { TodoListItem, onChangeItemPayload } from '@/models'
+import { useUserStore } from '@/stores/user'
 import { onMounted, reactive } from 'vue'
+const props = defineProps<{
+  taskGroupId: [string, number]
+}>()
 
+const userStore = useUserStore()
+const user = userStore.user
 let data: Array<TodoListItem> = reactive([])
 
 function onChangeItem(payload: onChangeItemPayload) {
@@ -14,12 +20,16 @@ function onChangeItem(payload: onChangeItemPayload) {
 onMounted(() => {
   if (currentUser) {
     getCollection(currentUser.email!).then((res) => {
-      data.push(...res)
+      const filteredRes = res.filter((el) => {
+        const taskGroup = user.getTaskGroups()[Number(props.taskGroupId)]
+        return el.taskGroup === taskGroup
+      })
+      data.push(...filteredRes)
     })
   }
 })
 </script>
 
 <template>
-  <List :items="data" @on-change="onChangeItem"></List>
+  <TodoItemList :items="data" @on-change="onChangeItem"></TodoItemList>
 </template>
