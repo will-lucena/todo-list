@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import type { TaskGroup } from '@/models/TaskGroup'
+
 defineProps<{
-  items: Array<string>
+  items: Array<TaskGroup>
 }>()
 
 const emit = defineEmits<{
@@ -14,8 +16,8 @@ function onClick(index: number) {
 
 <template>
   <ul>
-    <li v-for="(item, index) in items" :key="index" @click="onClick(index)">
-      <label :for="item">{{ item }}</label>
+    <li v-for="(item, index) in items" :name="item.name" :key="index" @click="onClick(index)">
+      <label :for="item.name">{{ item.name }}</label>
     </li>
   </ul>
 </template>

@@ -14,7 +14,7 @@ const router = useRouter()
 const userStore = useUserStore()
 
 function onClickCreate() {
-  const task = new TodoListItem(newTaskTitle.value, undefined, 'privadas')
+  const task = new TodoListItem(newTaskTitle.value, undefined, 0)
   addToCollection(task)
 }
 

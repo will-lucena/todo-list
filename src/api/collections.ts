@@ -10,6 +10,7 @@ import {
   where
 } from "firebase/firestore/lite";
 
+import type { TaskGroup } from '@/models/TaskGroup';
 import { currentUser } from '.';
 import { app } from "./setup";
 const db = getFirestore(app);
@@ -36,13 +37,13 @@ const getCollection = async (collectionId: string) => {
   const querySnapshot = await getDocs(q);
   const docs = new Array<TodoListItem>();
   querySnapshot.forEach((doc) => {
-    const { key, label, completed, sharedWith, taskGroup } = doc.data();
+    const { key, label, completed, sharedWith, taskGroupId } = doc.data();
     docs.push({
       key,
       label,
       completed,
       sharedWith,
-      taskGroup
+      taskGroupId
     });
   });
   return docs;
@@ -75,10 +76,10 @@ const getTaskGroups = async (email: string) => {
   const q = query(collection(db, "users"), where("email", "==", email));
   const querySnapshot = await getDocs(q);
 
-  const docs = new Array<string>();
+  const docs = new Array<TaskGroup>();
 
   querySnapshot.forEach((doc) => {
-    doc.data().taskGroups?.forEach((taskGroup: string) => {
+    doc.data().taskGroups?.forEach((taskGroup: TaskGroup) => {
       docs.push(taskGroup);
     });
   });

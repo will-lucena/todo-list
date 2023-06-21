@@ -1,3 +1,4 @@
+import type { TaskGroup } from './TaskGroup'
 
 export class User {
   private uid: string
@@ -5,10 +6,10 @@ export class User {
   private email: string
   private displayName?: string | null
   private photoURL?: string | null
-  private taskGroups: Array<string>
+  private taskGroups: Array<TaskGroup>
 
   constructor(uid: string, email: string, displayName?: string | null, 
-    photoURL?: string | null, friends?: Array<string>, taskGroups?: Array<string>) {
+    photoURL?: string | null, friends?: Array<string>, taskGroups?: Array<TaskGroup>) {
     this.uid = uid
     this.friends = friends || []
     this.email = email
@@ -44,7 +45,7 @@ export class User {
     return this.friends
   }
 
-  public getTaskGroups(): Array<string> {
+  public getTaskGroups(): Array<TaskGroup> {
     return this.taskGroups
   }
 
@@ -52,7 +53,7 @@ export class User {
     this.friends.push(friendEmail)
   }
 
-  public addGroup(groupName: string): void {
-    this.taskGroups.push(groupName)
+  public addGroup(group: TaskGroup): void {
+    this.taskGroups.push(group)
   }
 }

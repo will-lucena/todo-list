@@ -1,4 +1,4 @@
-export { currentUser, signIn } from "./auth";
+export { createAccount, currentUser, login } from "./auth";
 export {
   addToCollection,
   getCollection,

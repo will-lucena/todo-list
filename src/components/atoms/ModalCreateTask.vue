@@ -1,21 +1,26 @@
 <script setup lang="ts">
 import { addToCollection } from '@/api'
 import { TodoListItem } from '@/models'
-import { ref } from 'vue'
+import { TaskGroup } from '@/models/TaskGroup'
+import { onMounted, ref } from 'vue'
 
-defineProps<{
+const props = defineProps<{
   friends: Array<string>
-  availableGroups: Array<string>
+  availableGroups: Array<TaskGroup>
 }>()
 
 let title = ref('')
 let sharedWith = ref(Array<string>())
-let selectedGroup = ref('')
+let selectedGroup = ref(new TaskGroup(''))
 
 function submit() {
-  const item = new TodoListItem(title.value, [...sharedWith.value], selectedGroup.value)
+  const item = new TodoListItem(title.value, [...sharedWith.value], selectedGroup.value.id)
   addToCollection(item)
 }
+
+onMounted(() => {
+  console.log(props.availableGroups)
+})
 </script>
 
 <template>
@@ -38,8 +43,8 @@ function submit() {
       <section class="form__field">
         <label for="group">Grupo</label>
         <select v-model="selectedGroup" name="group">
-          <option v-for="group in availableGroups" :value="group" :key="group">
-            {{ group }}
+          <option v-for="group in availableGroups" :value="group" :key="group.id">
+            {{ group.name }}
           </option>
         </select>
       </section>

@@ -2,6 +2,7 @@
 import { currentUser } from '@/api'
 
 import SideDrawerProfile from '@/components/molecules/SideDrawerProfile.vue'
+import { TaskGroup } from '@/models/TaskGroup'
 import { routeNames } from '@/router/routes'
 import { ref } from 'vue'
 
@@ -35,7 +36,13 @@ function onClickNavigate(event: string, params: any) {
       <img :src="profileImage" @click="onClickProfile" referrerpolicy="no-referrer" />
     </main>
     <ul class="tabs">
-      <li @click="onClickNavigate(routeNames.TASKS.name, { taskGroupId: 0 })">Tarefas</li>
+      <li
+        @click="
+          onClickNavigate(routeNames.TASKS.name, { taskGroupId: TaskGroup.PERSONAL_GROUP_ID })
+        "
+      >
+        Tarefas
+      </li>
       <li @click="onClickNavigate(routeNames.TASK_GROUPS.name, null)">Grupos</li>
     </ul>
   </div>

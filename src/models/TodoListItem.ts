@@ -3,14 +3,14 @@ export class TodoListItem {
   key: string
   completed?: boolean
   sharedWith?: Array<string>
-  taskGroup?: string
+  taskGroupId?: number
 
-  constructor(label: string, sharedWith?: Array<string>, taskGroup?: string, completed?: boolean, 
+  constructor(label: string, sharedWith?: Array<string>, taskGroupId?: number, completed?: boolean, 
     key?: string) {
       this.label = label
       this.key = key || Date.now().toString()
       this.completed = completed
       this.sharedWith = sharedWith
-      this.taskGroup = taskGroup
+      this.taskGroupId = taskGroupId
   }
 }
