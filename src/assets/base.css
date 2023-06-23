@@ -34,6 +34,13 @@
   --color-text: var(--vt-c-text-light-1);
 
   --section-gap: 160px;
+
+  --color-background: var(--color-light);
+  --color-text: var(--color-dark);
+  --color-accent: #fab700;
+
+  --size-bezel: .5rem;
+  --size-radius: 4px;
 }
 
 @media (prefers-color-scheme: dark) {

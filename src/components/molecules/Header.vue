@@ -26,14 +26,21 @@ function onClickNavigate(event: string, params: any) {
 
 <template>
   <div class="main">
-    <SideDrawerProfile
-      v-if="showProfileMenu"
-      :profile-image="profileImage"
-      @close="showProfileMenu = !showProfileMenu"
-    />
+    <Transition name="slide-fade">
+      <SideDrawerProfile
+        v-if="showProfileMenu"
+        :profile-image="profileImage"
+        @close="showProfileMenu = !showProfileMenu"
+      />
+    </Transition>
 
     <main class="header__background">
-      <img :src="profileImage" @click="onClickProfile" referrerpolicy="no-referrer" />
+      <img
+        :src="profileImage"
+        @click="onClickProfile"
+        referrerpolicy="no-referrer"
+        class="avatar"
+      />
     </main>
     <ul class="tabs">
       <li
@@ -51,7 +58,7 @@ function onClickNavigate(event: string, params: any) {
 <style lang="scss" scoped>
 .header__background {
   background-color: var(--color-background);
-  padding: 1rem 2rem;
+  padding: 1rem;
 }
 
 .main {
@@ -62,5 +69,28 @@ function onClickNavigate(event: string, params: any) {
 .tabs {
   display: flex;
   justify-content: space-evenly;
+}
+
+.avatar {
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+}
+
+/*
+  Enter and leave animations can use different
+  durations and timing functions.
+*/
+.slide-fade-enter-active {
+  transition: all 0.5s linear;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.5s linear;
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateX(-300px);
 }
 </style>
