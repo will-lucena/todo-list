@@ -4,10 +4,22 @@ import { currentUser } from '@/api'
 import SideDrawerProfile from '@/components/molecules/SideDrawerProfile.vue'
 import { TaskGroup } from '@/models/TaskGroup'
 import { routeNames } from '@/router/routes'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+
+const props = defineProps<{
+  forceTab: number
+}>()
+
+watch(
+  () => props.forceTab,
+  (newValue) => {
+    tab.value = newValue
+    console.log(newValue)
+  }
+)
 
 const emit = defineEmits<{
-  (e: 'navigate', page: string, params: any): void
+  (e: 'navigate', page: string, params: any, tab: number): void
 }>()
 
 const profileImage = ref(currentUser?.photoURL || '')
@@ -19,8 +31,13 @@ function onClickProfile() {
   showProfileMenu.value = !showProfileMenu.value
 }
 
-function onClickNavigate(event: string, params: any) {
-  emit('navigate', event, params)
+function isActive(index: number) {
+  return index === tab.value
+}
+
+function onClickNavigate(event: string, params: any, index: number) {
+  tab.value = index
+  emit('navigate', event, params, index)
 }
 </script>
 
@@ -44,13 +61,21 @@ function onClickNavigate(event: string, params: any) {
     </main>
     <ul class="tabs">
       <li
+        class="tab"
         @click="
-          onClickNavigate(routeNames.TASKS.name, { taskGroupId: TaskGroup.PERSONAL_GROUP_ID })
+          onClickNavigate(routeNames.TASKS.name, { taskGroupId: TaskGroup.PERSONAL_GROUP_ID }, 0)
         "
+        :class="{ 'tab--active': isActive(0) }"
       >
         Tarefas
       </li>
-      <li @click="onClickNavigate(routeNames.TASK_GROUPS.name, null)">Grupos</li>
+      <li
+        class="tab"
+        @click="onClickNavigate(routeNames.TASK_GROUPS.name, null, 1)"
+        :class="{ 'tab--active': isActive(1) }"
+      >
+        Grupos
+      </li>
     </ul>
   </div>
 </template>
@@ -68,7 +93,22 @@ function onClickNavigate(event: string, params: any) {
 
 .tabs {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
+  padding: 0;
+}
+
+.tab {
+  list-style: none;
+  flex: 1;
+  text-align: center;
+  padding: 0.5rem;
+
+  cursor: pointer;
+
+  &--active {
+    border-bottom: 1px solid var(--color-accent);
+    color: var(--color-accent);
+  }
 }
 
 .avatar {

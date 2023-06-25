@@ -19,6 +19,7 @@
   --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
   --vt-c-text-dark-1: var(--vt-c-white);
   --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
+  --color-background-inverse: var(--vt-c-black);
 }
 
 /* semantic color variables for this project */
@@ -39,6 +40,12 @@
   --color-text: var(--color-dark);
   --color-accent: #fab700;
 
+  --color-black: #363839;
+  --color-light-gray: #9c9e9f;
+  --color-gray: #bdc1c6;
+  --color-white: #fff;
+  --color-green: #06842c;
+
   --size-bezel: .5rem;
   --size-radius: 4px;
 }
@@ -54,6 +61,8 @@
 
     --color-heading: var(--vt-c-text-dark-1);
     --color-text: var(--vt-c-text-dark-2);
+
+    --color-background-inverse: var(--vt-c-white);
   }
 }
 
