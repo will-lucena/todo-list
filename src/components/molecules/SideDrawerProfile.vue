@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { currentUser } from '@/api'
+import { currentUser, getConfig } from '@/api'
 import { signOut } from '@/api/auth'
 import FormAddFriend from '@/components/atoms/FormAddFriend.vue'
 import FormCreateTaskGroup from '@/components/atoms/FormCreateTaskGroup.vue'
@@ -22,6 +22,14 @@ const userName = ref(currentUser?.displayName || '')
 
 const hasSubitemOpen = computed(() => {
   return !showAddContactForm.value && !showGroupCreationForm.value
+})
+
+const canCreateTaskGroups = computed(() => {
+  return getConfig('createTaskGroups')
+})
+
+const canAddFriends = computed(() => {
+  return getConfig('friendList')
 })
 
 function onClickAddContact() {
@@ -63,7 +71,12 @@ async function onClickSignOut() {
       <h2>{{ userName }}</h2>
 
       <ul class="list">
-        <li v-show="!showGroupCreationForm" class="list__item" @click="onClickAddContact">
+        <li
+          v-if="canAddFriends"
+          v-show="!showGroupCreationForm"
+          class="list__item"
+          @click="onClickAddContact"
+        >
           Adicionar contato
         </li>
 
@@ -71,7 +84,12 @@ async function onClickSignOut() {
           <FormAddFriend @cancel="toggleContactForm" @success="toggleContactForm" />
         </li>
 
-        <li v-show="!showAddContactForm" class="list__item" @click="onClickCreateGroup">
+        <li
+          v-if="canCreateTaskGroups"
+          v-show="!showAddContactForm"
+          class="list__item"
+          @click="onClickCreateGroup"
+        >
           Criar grupo
         </li>
 
@@ -99,6 +117,8 @@ async function onClickSignOut() {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+
+  z-index: 1;
 
   &__container {
     position: absolute;

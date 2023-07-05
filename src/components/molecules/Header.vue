@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { currentUser } from '@/api'
+import { currentUser, getConfig } from '@/api'
 
 import SideDrawerProfile from '@/components/molecules/SideDrawerProfile.vue'
 import { TaskGroup } from '@/models/TaskGroup'
 import { routeNames } from '@/router/routes'
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 
 const props = defineProps<{
   forceTab: number
@@ -26,6 +26,10 @@ const profileImage = ref(currentUser?.photoURL || '')
 let showProfileMenu = ref(false)
 
 const tab = ref(0)
+
+const showTaskGroups = computed(() => {
+  return getConfig('taskGroups')
+})
 
 function onClickProfile() {
   showProfileMenu.value = !showProfileMenu.value
@@ -70,6 +74,7 @@ function onClickNavigate(event: string, params: any, index: number) {
         Tarefas
       </li>
       <li
+        v-if="showTaskGroups"
         class="tab"
         @click="onClickNavigate(routeNames.TASK_GROUPS.name, null, 1)"
         :class="{ 'tab--active': isActive(1) }"

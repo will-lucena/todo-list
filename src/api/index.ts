@@ -7,3 +7,5 @@ export {
   upsertUsersBase
 } from "./collections";
 
+export { getConfig } from './remoteConfig';
+

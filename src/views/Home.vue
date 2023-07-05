@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { addToCollection } from '@/api'
+import { addToCollection, getConfig } from '@/api'
 import ModalCreateTask from '@/components/atoms/ModalCreateTask.vue'
 import Header from '@/components/molecules/Header.vue'
 import { TodoListItem } from '@/models'
@@ -15,6 +15,10 @@ let forceTab = ref(0)
 const router = useRouter()
 
 const userStore = useUserStore()
+
+const showCreateSharedTask = computed(() => {
+  return getConfig('createSharedTask')
+})
 
 function onClickCreate() {
   const task = new TodoListItem(newTaskTitle.value, undefined, 0)
@@ -35,7 +39,9 @@ const detailedTaskButtonLabel = computed(() => {
 })
 
 onMounted(() => {
-  onNavigate(routeNames.TASKS.name, { taskGroupId: TaskGroup.PERSONAL_GROUP_ID }, 0)
+  setTimeout(() => {
+    onNavigate(routeNames.TASKS.name, { taskGroupId: TaskGroup.PERSONAL_GROUP_ID }, 0)
+  }, 1000)
 })
 </script>
 
@@ -56,7 +62,7 @@ onMounted(() => {
   </div>
 
   <footer>
-    <button @click="showModalCreateTask = !showModalCreateTask">
+    <button v-if="showCreateSharedTask" @click="showModalCreateTask = !showModalCreateTask">
       {{ detailedTaskButtonLabel }}
     </button>
   </footer>

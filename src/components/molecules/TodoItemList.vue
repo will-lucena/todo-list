@@ -2,6 +2,7 @@
 import { addToCollection } from '@/api'
 import type { onChangeItemPayload } from '@/models'
 import { TodoListItem } from '@/models'
+import { computed } from 'vue'
 
 const props = defineProps<{
   items: Array<TodoListItem>
@@ -11,6 +12,10 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: 'onChange', payload: onChangeItemPayload): void
 }>()
+
+const itemsCount = computed(() => {
+  return `(${props.items.length})`
+})
 
 function onChange(value: any, index: number) {
   addToCollection(
@@ -24,7 +29,10 @@ function onChange(value: any, index: number) {
 
 <template>
   <ul class="list">
-    <h2>{{ listTitle }}</h2>
+    <header class="list__header">
+      <h2 class="header__title">{{ listTitle }}</h2>
+      <h2 class="header__counter">{{ itemsCount }}</h2>
+    </header>
     <TransitionGroup name="done-undone">
       <li class="list__item" v-for="(item, index) in items" :key="item.key">
         <input
@@ -47,6 +55,13 @@ function onChange(value: any, index: number) {
   flex-direction: column;
   justify-content: flex-start;
   padding-left: 10px;
+
+  &__header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
 
   &__item {
     list-style: none;
@@ -112,28 +127,35 @@ label {
   }
 }
 
-h2 {
-  position: relative;
-  margin: 0;
-  padding: 10px 0;
-  font-size: 1.2em;
-}
+.header {
+  &__title {
+    position: relative;
+    margin: 0;
+    padding: 10px 0;
+    font-size: 1.2em;
 
-h2::before {
-  content: '';
-  display: block;
-  position: absolute;
-  top: 10px;
-  bottom: 10px;
-  left: -10px;
-  width: 5px;
-  background-color: var(--color-background-inverse);
-}
+    &::before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 10px;
+      bottom: 10px;
+      left: -10px;
+      width: 5px;
+      background-color: var(--color-background-inverse);
+    }
 
-h2::after {
-  display: block;
-  float: right;
-  font-weight: normal;
+    &::after {
+      display: block;
+      float: right;
+      font-weight: normal;
+    }
+  }
+
+  &__counter {
+    font-size: 1.2rem;
+    margin-right: 0.5rem;
+  }
 }
 
 /*
