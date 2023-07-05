@@ -1,5 +1,6 @@
 import { upsertUsersBase } from '@/api'
 import { User } from '@/models'
+import { TaskGroup } from '@/models/TaskGroup'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
@@ -17,7 +18,7 @@ export const useUserStore = defineStore('user', () => {
   }
 
   async function addGroup(groupName: string){
-    user.value.addGroup(groupName)
+    user.value.addGroup(new TaskGroup(groupName))
     await upsertUsersBase(user.value.getUserCopy())
   }
 
