@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { addToCollection, getConfig } from '@/api'
+import { getConfig } from '@/api'
 import ModalCreateTask from '@/components/atoms/ModalCreateTask.vue'
 import Header from '@/components/molecules/Header.vue'
 import { TodoListItem } from '@/models'
 import { TaskGroup } from '@/models/TaskGroup'
 import { routeNames } from '@/router/routes'
+import { useTodoItemsStore } from '@/stores/todoItems'
 import { useUserStore } from '@/stores/user'
 import { computed, onMounted, ref } from 'vue'
 import { RouterView, useRouter } from 'vue-router'
@@ -15,6 +16,7 @@ let forceTab = ref(0)
 const router = useRouter()
 
 const userStore = useUserStore()
+const todoItemsStore = useTodoItemsStore()
 
 const showCreateSharedTask = computed(() => {
   return getConfig('createSharedTask')
@@ -22,7 +24,8 @@ const showCreateSharedTask = computed(() => {
 
 function onClickCreate() {
   const task = new TodoListItem(newTaskTitle.value, undefined, 0)
-  addToCollection(task)
+  todoItemsStore.addItem(task)
+  newTaskTitle.value = ''
 }
 
 function onNavigate(page: string, params: any, tab: number) {
@@ -58,7 +61,7 @@ onMounted(() => {
 
   <div class="input__container">
     <input type="text" v-model="newTaskTitle" placeholder="Digitar tarefa" />
-    <button @click="onClickCreate">Criar tarefa</button>
+    <button class="button" @click="onClickCreate">Criar tarefa</button>
   </div>
 
   <footer>
@@ -70,9 +73,16 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .input__container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+
+  background-color: var(--color-background);
   padding: 1rem;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  gap: 1rem;
 }
 
 input[type='text'],
@@ -86,9 +96,6 @@ textarea {
   font-size: 1rem;
   font-weight: 400;
   letter-spacing: 1px;
-  margin-bottom: 2rem;
-  padding: 0 0 0.875rem 0;
-  // text-transform: uppercase;
   width: 100%;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -106,6 +113,20 @@ input[type='text']:focus,
 [type='email']:focus,
 textarea:focus {
   outline: none;
-  padding: 0 0 0.875em 0;
+  padding: 0 0 0.875rem 0;
+}
+
+@media (max-width: 500px) {
+  input[type='text'],
+  [type='email'],
+  select,
+  textarea {
+    margin-bottom: 2rem;
+    padding: 0 0 0.875rem 0;
+  }
+
+  .input__container {
+    flex-direction: column;
+  }
 }
 </style>

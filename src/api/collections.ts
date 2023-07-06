@@ -11,6 +11,7 @@ import {
 } from "firebase/firestore/lite";
 
 import type { TaskGroup } from '@/models/TaskGroup';
+import { updateDoc, writeBatch } from 'firebase/firestore';
 import { currentUser } from '.';
 import { app } from "./setup";
 const db = getFirestore(app);
@@ -20,6 +21,30 @@ const addToCollection = async (item: TodoListItem) => {
   const collectionId = currentUser!.email!
   await setDoc(doc(db, collectionId, item.key), payload);
 };
+
+const updateCollectionItem = async (item: TodoListItem) => {
+  const payload = sanitizeObject(item);
+  const collectionId = currentUser!.email!
+  await updateDoc(doc(db, collectionId, item.key), payload);
+};
+
+const batchUpdate = async(itemsToUpdate: Array<TodoListItem>) => {
+  const batch = writeBatch(db)
+  const collectionId = currentUser!.email!
+  itemsToUpdate.forEach(item => {
+    batch.update(doc(db, collectionId, item.key), {item})
+  })
+  batch.commit()
+}
+
+const batchRemove = async(itemsToRemove: Array<TodoListItem>) => {
+  const batch = writeBatch(db)
+  const collectionId = currentUser!.email!
+  itemsToRemove.forEach(item => {
+    batch.delete(doc(db, collectionId, item.key))
+  })
+  batch.commit()
+}
 
 const sanitizeObject = (item: any) => {
   const payload = {};
@@ -87,8 +112,7 @@ const getTaskGroups = async (email: string) => {
 };
 
 export {
-  addToCollection,
-  getCollection, getFriends,
-  getTaskGroups, removeFromCollection,
-  upsertUsersBase
+  addToCollection, batchRemove, batchUpdate, getCollection, getFriends,
+  getTaskGroups, removeFromCollection, updateCollectionItem, upsertUsersBase
 };
+

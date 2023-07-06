@@ -1,48 +1,53 @@
 <script setup lang="ts">
-import { currentUser, getCollection } from '@/api'
+import { currentUser } from '@/api'
 import TodoItemList from '@/components/molecules/TodoItemList.vue'
-import type { TodoListItem, onChangeItemPayload } from '@/models'
-import { computed, onMounted, reactive } from 'vue'
+import { useTodoItemsStore } from '@/stores/todoItems'
+import { computed, onMounted } from 'vue'
 const props = defineProps<{
   taskGroupId: string | number
 }>()
 
-let data: Array<TodoListItem> = reactive([])
-
-function onChangeItem(payload: onChangeItemPayload) {
-  data[payload.index].completed = payload.value
-  Object.assign(data[payload.index], { completed: payload.value })
-}
+const todoItemsStore = useTodoItemsStore()
 
 const todoItems = computed(() => {
-  return data.filter((el) => !el.completed)
+  return todoItemsStore.storedItems.filter((el) => !el.completed)
 })
 
 const completedItems = computed(() => {
-  return data.filter((el) => el.completed)
+  return todoItemsStore.storedItems.filter((el) => el.completed)
 })
+
+function onClickClearCompleted() {
+  todoItemsStore.deleteBatch(completedItems.value)
+}
+
+function onClickCompleteAllTasks() {
+  todoItemsStore.completeBatch(todoItems.value)
+}
 
 onMounted(() => {
   if (currentUser) {
-    getCollection(currentUser.email!).then((res) => {
-      console.log(res)
-      const filteredRes = res.filter((el) => {
-        return el.taskGroupId == props.taskGroupId
-      })
-      data.push(...filteredRes)
-    })
+    todoItemsStore.loadItems(currentUser.email!, Number(props.taskGroupId))
   }
 })
 </script>
 
 <template>
   <div class="container">
-    <TodoItemList :items="todoItems" list-title="Todo" @on-change="onChangeItem"></TodoItemList>
+    <!-- <TodoItemList
+      action-button-label="Concluir tarefas"
+      :items="todoItems"
+      list-title="Todo"
+      @action-click="onClickCompleteAllTasks"
+    />
     <TodoItemList
+      action-button-label="Limpar concluidas"
       :items="completedItems"
       list-title="Done"
-      @on-change="onChangeItem"
-    ></TodoItemList>
+      @action-click="onClickClearCompleted"
+    /> -->
+    <TodoItemList :items="todoItems" list-title="Todo" @action-click="onClickCompleteAllTasks" />
+    <TodoItemList :items="completedItems" list-title="Done" @action-click="onClickClearCompleted" />
   </div>
 </template>
 

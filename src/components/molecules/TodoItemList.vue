@@ -1,29 +1,24 @@
 <script setup lang="ts">
-import { addToCollection } from '@/api'
-import type { onChangeItemPayload } from '@/models'
 import { TodoListItem } from '@/models'
+import { useTodoItemsStore } from '@/stores/todoItems'
 import { computed } from 'vue'
 
 const props = defineProps<{
   items: Array<TodoListItem>
   listTitle: string
+  actionButtonLabel?: string
 }>()
 
-const emit = defineEmits<{
-  (e: 'onChange', payload: onChangeItemPayload): void
-}>()
+const emit = defineEmits(['actionClick'])
+
+const todoItemsStore = useTodoItemsStore()
 
 const itemsCount = computed(() => {
   return `(${props.items.length})`
 })
 
 function onChange(value: any, index: number) {
-  addToCollection(
-    Object.assign(props.items[index], {
-      completed: value.target?.checked || false
-    })
-  )
-  emit('onChange', { index, value: value.target?.checked })
+  todoItemsStore.updateItem(index, value.target?.checked || false)
 }
 </script>
 
@@ -31,7 +26,12 @@ function onChange(value: any, index: number) {
   <ul class="list">
     <header class="list__header">
       <h2 class="header__title">{{ listTitle }}</h2>
-      <h2 class="header__counter">{{ itemsCount }}</h2>
+      <div class="list__header header__action_block">
+        <button v-if="actionButtonLabel" @click="emit('actionClick')" class="button button--slim">
+          {{ actionButtonLabel }}
+        </button>
+        <h2 class="header__counter">{{ itemsCount }}</h2>
+      </div>
     </header>
     <TransitionGroup name="done-undone">
       <li class="list__item" v-for="(item, index) in items" :key="item.key">
@@ -155,6 +155,10 @@ label {
   &__counter {
     font-size: 1.2rem;
     margin-right: 0.5rem;
+  }
+
+  &__action_block {
+    gap: 1rem;
   }
 }
 
