@@ -34,20 +34,22 @@ onMounted(() => {
 
 <template>
   <div class="container">
-    <!-- <TodoItemList
+    <TodoItemList
+      class="list"
       action-button-label="Concluir tarefas"
       :items="todoItems"
       list-title="Todo"
       @action-click="onClickCompleteAllTasks"
     />
     <TodoItemList
+      class="list"
       action-button-label="Limpar concluidas"
       :items="completedItems"
       list-title="Done"
       @action-click="onClickClearCompleted"
-    /> -->
-    <TodoItemList :items="todoItems" list-title="Todo" @action-click="onClickCompleteAllTasks" />
-    <TodoItemList :items="completedItems" list-title="Done" @action-click="onClickClearCompleted" />
+    />
+    <!-- <TodoItemList :items="todoItems" list-title="Todo" @action-click="onClickCompleteAllTasks" />
+    <TodoItemList :items="completedItems" list-title="Done" @action-click="onClickClearCompleted" /> -->
   </div>
 </template>
 
@@ -57,5 +59,19 @@ onMounted(() => {
   background: var(--color-background);
   border-radius: 5px;
   box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.1);
+
+  display: flex;
+  flex-direction: column;
+}
+
+.list {
+  flex: 1;
+}
+
+@media (min-width: 500px) {
+  .container {
+    gap: 3rem;
+    flex-direction: row;
+  }
 }
 </style>

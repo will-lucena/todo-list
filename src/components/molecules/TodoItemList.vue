@@ -17,6 +17,10 @@ const itemsCount = computed(() => {
   return `(${props.items.length})`
 })
 
+const showActionButton = computed(() => {
+  return props.items.length > 0 && !!props.actionButtonLabel
+})
+
 function onChange(value: any, index: number) {
   todoItemsStore.updateItem(index, value.target?.checked || false)
 }
@@ -27,7 +31,7 @@ function onChange(value: any, index: number) {
     <header class="list__header">
       <h2 class="header__title">{{ listTitle }}</h2>
       <div class="list__header header__action_block">
-        <button v-if="actionButtonLabel" @click="emit('actionClick')" class="button button--slim">
+        <button v-if="showActionButton" @click="emit('actionClick')" class="button button--slim">
           {{ actionButtonLabel }}
         </button>
         <h2 class="header__counter">{{ itemsCount }}</h2>

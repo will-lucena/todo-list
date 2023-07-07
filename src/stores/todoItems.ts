@@ -1,4 +1,4 @@
-import { addToCollection, batchUpdate, getCollection, updateCollectionItem } from '@/api'
+import { addToCollection, getCollection, removeFromCollection, updateCollectionItem } from '@/api'
 import { TodoListItem } from '@/models'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
@@ -6,9 +6,9 @@ import { ref } from 'vue'
 export const useTodoItemsStore = defineStore('todoItems', () => {
   const storedItems = ref(Array<TodoListItem>())
 
-  function updateItem(index: number, value: Boolean) {
+  async function updateItem(index: number, value: Boolean) {
     Object.assign(storedItems.value[index], { completed: value})
-    updateCollectionItem(storedItems.value[index])
+    await updateCollectionItem(storedItems.value[index])
   }
 
   async function addItem(item: TodoListItem){
@@ -26,15 +26,19 @@ export const useTodoItemsStore = defineStore('todoItems', () => {
   }
 
   function completeBatch(batch: Array<TodoListItem>){
-    batch.forEach(element => {
+    batch.forEach(async element => {
       const index = storedItems.value.findIndex(el => el.key === element.key)
-      updateItem(index, true)
+      await updateItem(index, true)
     });
   }
 
   function deleteBatch(batch: Array<TodoListItem>){
-    storedItems.value.filter(el => !batch.includes(el))
-    batchUpdate(batch)
+    const array = storedItems.value.filter(el => !batch.includes(el))
+    storedItems.value.length = 0
+    storedItems.value.push(...array)
+    batch.forEach(async element => {
+      await removeFromCollection(element.key)
+    });
   }
 
   return { storedItems: storedItems.value, updateItem, addItem, loadItems, completeBatch, deleteBatch }

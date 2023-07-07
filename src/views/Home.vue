@@ -59,10 +59,10 @@ onMounted(() => {
 
   <RouterView @navigateToTask="onNavigateToTask"></RouterView>
 
-  <div class="input__container">
+  <form @submit.prevent="onClickCreate" class="input__container">
     <input type="text" v-model="newTaskTitle" placeholder="Digitar tarefa" />
-    <button class="button" @click="onClickCreate">Criar tarefa</button>
-  </div>
+    <button type="submit" class="button">Criar tarefa</button>
+  </form>
 
   <footer>
     <button v-if="showCreateSharedTask" @click="showModalCreateTask = !showModalCreateTask">
@@ -89,6 +89,8 @@ input[type='text'],
 [type='email'],
 select,
 textarea {
+  margin-bottom: 1rem;
+  padding: 0 0 0.875rem 0;
   background: none;
   border: none;
   border-bottom: solid 2px #474544;
@@ -116,15 +118,7 @@ textarea:focus {
   padding: 0 0 0.875rem 0;
 }
 
-@media (max-width: 500px) {
-  input[type='text'],
-  [type='email'],
-  select,
-  textarea {
-    margin-bottom: 2rem;
-    padding: 0 0 0.875rem 0;
-  }
-
+@media (min-width: 500px) {
   .input__container {
     flex-direction: column;
   }
