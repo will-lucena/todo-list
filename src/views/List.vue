@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { currentUser } from '@/api'
 import TodoItemList from '@/components/molecules/TodoItemList.vue'
-import { TodoListItem } from '@/models'
 import { useTodoItemsStore } from '@/stores/todoItems'
 import { computed, onMounted } from 'vue'
 const props = defineProps<{
@@ -26,19 +25,6 @@ function onClickCompleteAllTasks() {
   todoItemsStore.completeBatch(todoItems.value)
 }
 
-function onChangeTodoItem(index: number, value: boolean) {
-  onChangeItem(todoItems.value, index, value)
-}
-
-function onChangeCompletedItem(index: number, value: boolean) {
-  onChangeItem(completedItems.value, index, value)
-}
-
-function onChangeItem(source: Array<TodoListItem>, index: number, value: boolean) {
-  const sourceIndex = todoItemsStore.storedItems.findIndex((el) => el.key === source[index].key)
-  todoItemsStore.updateItem(sourceIndex, value)
-}
-
 onMounted(() => {
   if (currentUser) {
     todoItemsStore.loadItems(currentUser.email!, Number(props.taskGroupId))
@@ -54,7 +40,6 @@ onMounted(() => {
       :items="todoItems"
       list-title="Todo"
       @action-click="onClickCompleteAllTasks"
-      @change-item="onChangeTodoItem"
     />
     <TodoItemList
       class="list"
@@ -62,7 +47,6 @@ onMounted(() => {
       :items="completedItems"
       list-title="Done"
       @action-click="onClickClearCompleted"
-      @change-item="onChangeCompletedItem"
     />
     <!-- <TodoItemList :items="todoItems" list-title="Todo" @action-click="onClickCompleteAllTasks" />
     <TodoItemList :items="completedItems" list-title="Done" @action-click="onClickClearCompleted" /> -->

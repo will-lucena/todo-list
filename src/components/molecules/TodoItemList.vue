@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { TodoListItem } from '@/models'
+import { useTodoItemsStore } from '@/stores/todoItems'
 import { computed } from 'vue'
 
 const props = defineProps<{
@@ -8,10 +9,9 @@ const props = defineProps<{
   actionButtonLabel?: string
 }>()
 
-const emit = defineEmits<{
-  (e: 'actionClick'): void
-  (e: 'changeItem', index: number, value: boolean): void
-}>()
+const emit = defineEmits(['actionClick'])
+
+const todoItemsStore = useTodoItemsStore()
 
 const itemsCount = computed(() => {
   return `(${props.items.length})`
@@ -22,7 +22,7 @@ const showActionButton = computed(() => {
 })
 
 function onChange(value: any, index: number) {
-  emit('changeItem', index, value.target?.checked || false)
+  todoItemsStore.updateItem(index, value.target?.checked || false)
 }
 </script>
 
