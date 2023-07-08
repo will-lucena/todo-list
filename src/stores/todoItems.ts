@@ -17,6 +17,10 @@ export const useTodoItemsStore = defineStore('todoItems', () => {
   }
 
   async function loadItems(collectionKey: string, taskGroupId: number) {
+    if (storedItems.value.length > 0){
+      return
+    }
+    
     getCollection(collectionKey).then((res) => {
       const filteredRes = res.filter((el) => {
         return el.taskGroupId == taskGroupId

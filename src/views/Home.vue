@@ -75,8 +75,10 @@ onMounted(() => {
 .input__container {
   position: fixed;
   bottom: 0;
-  left: 0;
   width: 100%;
+
+  max-width: 1140px;
+  margin: 0 auto;
 
   background-color: var(--color-background);
   padding: 1rem;
