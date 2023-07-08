@@ -8,6 +8,7 @@ import { routeNames } from '@/router/routes'
 import { getTaskGroups } from './api/collections'
 import { User } from './models'
 import { useUserStore } from './stores/user'
+import ReloadPWA from './views/ReloadPWA.vue'
 
 const userStore = useUserStore()
 
@@ -32,5 +33,6 @@ onMounted(async () => {
 </script>
 
 <template>
+  <ReloadPWA />
   <RouterView />
 </template>
