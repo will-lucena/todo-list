@@ -1,14 +1,17 @@
 <script setup lang="ts">
 import { currentUser, getConfig } from '@/api'
 
-import SideDrawerProfile from '@/components/molecules/SideDrawerProfile.vue'
+import { signOut } from '@/api/auth'
 import { TaskGroup } from '@/models/TaskGroup'
 import { routeNames } from '@/router/routes'
 import { computed, ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
 
 const props = defineProps<{
   forceTab: number
 }>()
+
+const router = useRouter()
 
 watch(
   () => props.forceTab,
@@ -43,17 +46,22 @@ function onClickNavigate(event: string, params: any, index: number) {
   tab.value = index
   emit('navigate', event, params, index)
 }
+
+async function onClickLogout() {
+  await signOut()
+  router.push(routeNames.LOGIN.path)
+}
 </script>
 
 <template>
   <div class="main">
-    <Transition name="slide-fade">
+    <!-- <Transition name="slide-fade">
       <SideDrawerProfile
         v-if="showProfileMenu"
         :profile-image="profileImage"
         @close="showProfileMenu = !showProfileMenu"
       />
-    </Transition>
+    </Transition> -->
 
     <main class="header__background">
       <img
@@ -61,6 +69,13 @@ function onClickNavigate(event: string, params: any, index: number) {
         @click="onClickProfile"
         referrerpolicy="no-referrer"
         class="avatar"
+      />
+
+      <font-awesome-icon
+        icon="fa-solid fa-arrow-right-from-bracket"
+        size="2xl"
+        class="logout-icon"
+        @click="onClickLogout"
       />
     </main>
     <ul class="tabs">
@@ -89,6 +104,19 @@ function onClickNavigate(event: string, params: any, index: number) {
 .header__background {
   background-color: var(--color-background);
   padding: 1rem;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logout-icon {
+  cursor: pointer;
+
+  &:hover {
+    color: var(--color-background-inverse);
+  }
 }
 
 .main {
