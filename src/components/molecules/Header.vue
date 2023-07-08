@@ -17,7 +17,6 @@ watch(
   () => props.forceTab,
   (newValue) => {
     tab.value = newValue
-    console.log(newValue)
   }
 )
 
@@ -51,6 +50,18 @@ async function onClickLogout() {
   await signOut()
   router.push(routeNames.LOGIN.path)
 }
+
+function switchTheme() {
+  var currentTheme = document.documentElement.getAttribute('data-theme')
+  var targetTheme = 'light'
+
+  if (currentTheme === 'light') {
+    targetTheme = 'dark'
+  }
+
+  document.documentElement.setAttribute('data-theme', targetTheme)
+  localStorage.setItem('theme', targetTheme)
+}
 </script>
 
 <template>
@@ -71,12 +82,21 @@ async function onClickLogout() {
         class="avatar"
       />
 
-      <font-awesome-icon
-        icon="fa-solid fa-arrow-right-from-bracket"
-        size="2xl"
-        class="logout-icon"
-        @click="onClickLogout"
-      />
+      <section class="header__actions">
+        <font-awesome-icon
+          icon="fa-solid fa-circle-half-stroke"
+          size="2xl"
+          class="logout-icon"
+          @click="switchTheme"
+        />
+
+        <font-awesome-icon
+          icon="fa-solid fa-arrow-right-from-bracket"
+          size="2xl"
+          class="logout-icon"
+          @click="onClickLogout"
+        />
+      </section>
     </main>
     <ul class="tabs">
       <li
@@ -101,21 +121,31 @@ async function onClickLogout() {
 </template>
 
 <style lang="scss" scoped>
-.header__background {
-  background-color: var(--color-background);
-  padding: 1rem;
+.header {
+  &__background {
+    background-color: var(--quaternary);
+    padding: 1rem;
 
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+  }
 }
 
 .logout-icon {
   cursor: pointer;
 
   &:hover {
-    color: var(--color-background-inverse);
+    color: var(--inverse-secondary);
   }
 }
 
@@ -131,6 +161,7 @@ async function onClickLogout() {
 }
 
 .tab {
+  background-color: var(--quaternary);
   list-style: none;
   flex: 1;
   text-align: center;
@@ -139,8 +170,9 @@ async function onClickLogout() {
   cursor: pointer;
 
   &--active {
-    border-bottom: 1px solid var(--color-accent);
-    color: var(--color-accent);
+    border-bottom: 1px solid var(--primary);
+    border-top: 1px solid var(--primary);
+    color: var(--primary);
   }
 }
 

@@ -2,9 +2,9 @@
 import { addToCollection } from '@/api'
 import { TodoListItem } from '@/models'
 import { TaskGroup } from '@/models/TaskGroup'
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 
-const props = defineProps<{
+defineProps<{
   friends: Array<string>
   availableGroups: Array<TaskGroup>
 }>()
@@ -17,10 +17,6 @@ function submit() {
   const item = new TodoListItem(title.value, [...sharedWith.value], selectedGroup.value.id)
   addToCollection(item)
 }
-
-onMounted(() => {
-  console.log(props.availableGroups)
-})
 </script>
 
 <template>

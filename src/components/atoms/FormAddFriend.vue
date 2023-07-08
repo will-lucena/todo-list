@@ -29,7 +29,6 @@ async function submit() {
 
 function onClickCancel(event: Event) {
   event.preventDefault()
-  console.log('cancel')
   email.value = ''
   emit('cancel')
 }
@@ -78,7 +77,7 @@ function onClickCancel(event: Event) {
     white-space: nowrap;
     transform: translate(0, 0);
     transform-origin: 0 0;
-    background: var(--color-background);
+    background: var(--secondary);
     transition: transform 120ms ease-in;
     font-weight: bold;
     line-height: 1.2;

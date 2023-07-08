@@ -41,7 +41,16 @@ const detailedTaskButtonLabel = computed(() => {
   return showModalCreateTask.value ? 'Fechar' : 'Criar tarefa compartilhada'
 })
 
+function setTheme() {
+  var storedTheme =
+    localStorage.getItem('theme') ||
+    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+  if (storedTheme) document.documentElement.setAttribute('data-theme', storedTheme)
+}
+
 onMounted(() => {
+  setTheme()
+
   setTimeout(() => {
     onNavigate(routeNames.TASKS.name, { taskGroupId: TaskGroup.PERSONAL_GROUP_ID }, 0)
   }, 1000)
@@ -95,7 +104,7 @@ textarea {
   padding: 0 0 0.875rem 0;
   background: none;
   border: none;
-  border-bottom: solid 2px #474544;
+  border-bottom: solid 2px var(--inverse-secondary);
   color: var(--color-background-inverse);
   font-size: 1rem;
   font-weight: 400;

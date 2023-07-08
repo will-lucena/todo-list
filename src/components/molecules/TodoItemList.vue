@@ -69,7 +69,7 @@ function onChange(value: any, index: number) {
 
   &__item {
     list-style: none;
-    border-top: 1px dashed var(--color-background-inverse);
+    border-top: 1px dashed var(--inverse-secondary);
     padding: 0.5rem 0;
   }
 }
@@ -78,8 +78,7 @@ input[type='checkbox'] {
   position: relative;
   width: 1.5em;
   height: 1.5em;
-  color: var(--color-black);
-  border: 1px solid var(--color-gray);
+  border: 1px solid var(--inverse-secondary);
   border-radius: 4px;
   appearance: none;
   outline: 0;
@@ -101,8 +100,8 @@ input[type='checkbox'] {
   }
   &:checked {
     color: var(--color-white);
-    border-color: var(--color-green);
-    background: var(--color-green);
+    border-color: var(--primary);
+    background: var(--primary);
     &::before {
       opacity: 1;
     }
@@ -122,11 +121,11 @@ label {
   &::before {
     position: absolute;
     content: attr(data-content);
-    color: var(--color-light-gray);
+    color: var(--color-disabled);
     clip-path: polygon(0 0, 0 0, 0% 100%, 0 100%);
     text-decoration: line-through;
     text-decoration-thickness: 3px;
-    text-decoration-color: var(--color-black);
+    text-decoration-color: var(--primary);
     transition: clip-path 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 }
@@ -146,7 +145,7 @@ label {
       bottom: 10px;
       left: -10px;
       width: 5px;
-      background-color: var(--color-background-inverse);
+      background-color: var(--inverse-quaternary);
     }
 
     &::after {
