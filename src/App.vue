@@ -33,6 +33,16 @@ onMounted(async () => {
 </script>
 
 <template>
-  <ReloadPWA />
   <RouterView />
+  <ReloadPWA class="pwa" />
 </template>
+
+<style lang="scss" scoped>
+.pwa {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  margin: 0 auto;
+  width: 100%;
+}
+</style>
