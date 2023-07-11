@@ -76,8 +76,8 @@ function onChange(value: any, index: number) {
 
 input[type='checkbox'] {
   position: relative;
-  width: 1.5em;
-  height: 1.5em;
+  width: 1rem;
+  height: 1rem;
   border: 1px solid var(--inverse-secondary);
   border-radius: 4px;
   appearance: none;
@@ -89,9 +89,9 @@ input[type='checkbox'] {
     content: '';
     display: block;
     top: 0;
-    left: 5px;
-    width: 8px;
-    height: 14px;
+    left: 4px;
+    width: 6px;
+    height: 10px;
     border-style: solid;
     border-color: var(--color-white);
     border-width: 0 2px 2px 0;
@@ -114,8 +114,8 @@ input[type='checkbox'] {
 label {
   position: relative;
   cursor: pointer;
-  font-size: 1.5em;
-  padding: 0 0.25em 0;
+  font-size: 1rem;
+  padding: 0 0.25rem 0;
   user-select: none;
 
   &::before {
@@ -135,7 +135,7 @@ label {
     position: relative;
     margin: 0;
     padding: 10px 0;
-    font-size: 1.2em;
+    font-size: 1.5rem;
 
     &::before {
       content: '';
@@ -156,7 +156,7 @@ label {
   }
 
   &__counter {
-    font-size: 1.2rem;
+    font-size: 1rem;
     margin-right: 0.5rem;
   }
 

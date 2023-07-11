@@ -89,7 +89,7 @@ onMounted(() => {
   max-width: 1140px;
   margin: 0 auto;
 
-  background-color: var(--color-background);
+  background-color: var(--quaternary);
   padding: 1rem;
   display: flex;
   flex-direction: row;
@@ -105,7 +105,7 @@ textarea {
   background: none;
   border: none;
   border-bottom: solid 2px var(--inverse-secondary);
-  color: var(--color-background-inverse);
+  color: var(--inverse-quaternary);
   font-size: 1rem;
   font-weight: 400;
   letter-spacing: 1px;

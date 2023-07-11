@@ -48,7 +48,8 @@ $button-active-blue: #1669f2;
 
 .login {
   display: flex;
-  flex-direction: row;
+
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 3rem;
@@ -98,6 +99,12 @@ $button-active-blue: #1669f2;
   }
   &:active {
     background: $button-active-blue;
+  }
+}
+
+@media (min-width: 500px) {
+  .login {
+    flex-direction: row;
   }
 }
 
