@@ -40,9 +40,10 @@ onMounted(async () => {
 <style lang="scss" scoped>
 .pwa {
   position: absolute;
-  bottom: 0;
+  top: 0;
   left: 0;
   margin: 0 auto;
   width: 100%;
+  height: 100vh;
 }
 </style>

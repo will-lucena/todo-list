@@ -5,7 +5,8 @@
 /* light palette from https://colorhunt.co/palette/fcecddffc288fea82fff6701/ */
 
 :root {
-  --color-white: #ffffff;
+  --color-white: #fff;
+  --color-black: #000;
   --color-disabled: #9c9e9f;
 
   --dark-00: #222222;

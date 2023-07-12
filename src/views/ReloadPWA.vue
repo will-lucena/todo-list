@@ -1,8 +1,7 @@
 <template>
-  <div v-if="offlineReady || needRefresh" class="flex flex-wrap" role="alert">
+  <div v-if="offlineReady || needRefresh">
     <div class="app-message">
       <span> {{ appMessage }} </span>
-      <button v-if="!needRefresh" @click="updateServiceWorker()" class="button">Recarregar</button>
       <button @click="close" class="button">Ok</button>
     </div>
   </div>
@@ -10,11 +9,19 @@
 <script setup lang="ts">
 import { useRegisterSW } from 'virtual:pwa-register/vue'
 import { computed } from 'vue'
-const { offlineReady, needRefresh, updateServiceWorker } = useRegisterSW()
+const { offlineReady, needRefresh } = useRegisterSW({
+  onRegistered(r) {
+    r &&
+      setInterval(() => {
+        r.update()
+      }, intervalMS)
+  }
+})
 async function close() {
   offlineReady.value = false
   needRefresh.value = false
 }
+const intervalMS = 60 * 60 * 1000
 
 const appMessage = computed(() => {
   return offlineReady
@@ -25,16 +32,24 @@ const appMessage = computed(() => {
 
 <style scoped>
 .app-message {
+  position: relative;
+  top: 30px;
+  left: 0;
+  width: 75%;
+
+  margin: 0 auto;
+
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
 
-  width: 100%;
   padding: 2rem 1rem;
   flex-wrap: wrap;
-  float: 1;
-  background-color: var(--color-background);
+  z-index: 5;
+  background-color: var(--color-black);
+
+  border-radius: 8px;
 }
 </style>
