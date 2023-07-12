@@ -82,7 +82,7 @@ function switchTheme() {
         class="avatar"
       />
 
-      <h1 class="header__title">Todo list</h1>
+      <h1 class="header__title">Todo App</h1>
 
       <section class="header__actions">
         <font-awesome-icon

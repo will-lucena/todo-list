@@ -19,7 +19,7 @@ function onClickSignin() {
 
 <template>
   <main class="main">
-    <h1 class="title">Todo list</h1>
+    <h1 class="title">Todo App</h1>
     <div class="login">
       <div class="google-btn" @click="onClickLogin">
         <div class="google-icon-wrapper">
