@@ -82,6 +82,8 @@ function switchTheme() {
         class="avatar"
       />
 
+      <h1 class="header__title">Todo list</h1>
+
       <section class="header__actions">
         <font-awesome-icon
           icon="fa-solid fa-circle-half-stroke"
@@ -130,6 +132,12 @@ function switchTheme() {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+  }
+
+  &__title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--inverse-quaternary);
   }
 
   &__actions {

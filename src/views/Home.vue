@@ -100,8 +100,6 @@ input[type='text'],
 [type='email'],
 select,
 textarea {
-  margin-bottom: 1rem;
-  padding: 0 0 0.875rem 0;
   background: none;
   border: none;
   border-bottom: solid 2px var(--inverse-secondary);

@@ -18,33 +18,53 @@ function onClickSignin() {
 </script>
 
 <template>
-  <div class="login">
-    <div class="google-btn" @click="onClickLogin">
-      <div class="google-icon-wrapper">
-        <img
-          class="google-icon"
-          src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
-        />
+  <main class="main">
+    <h1 class="title">Todo list</h1>
+    <div class="login">
+      <div class="google-btn" @click="onClickLogin">
+        <div class="google-icon-wrapper">
+          <img
+            class="google-icon"
+            src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+          />
+        </div>
+        <p class="btn-text"><b>Login with google</b></p>
       </div>
-      <p class="btn-text"><b>Login with google</b></p>
-    </div>
 
-    <div class="google-btn google-btn--signin" @click="onClickSignin">
-      <div class="google-icon-wrapper">
-        <img
-          class="google-icon"
-          src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
-        />
+      <div class="google-btn google-btn--signin" @click="onClickSignin">
+        <div class="google-icon-wrapper">
+          <img
+            class="google-icon"
+            src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+          />
+        </div>
+        <p class="btn-text"><b>Sign in with google</b></p>
       </div>
-      <p class="btn-text"><b>Sign in with google</b></p>
     </div>
-  </div>
+  </main>
 </template>
 
 <style lang="scss" scoped>
 $white: #fff;
 $google-blue: #4285f4;
 $button-active-blue: #1669f2;
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+
+  width: 100%;
+  height: 100vh;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--inverse-quaternary);
+}
 
 .login {
   display: flex;
@@ -53,23 +73,22 @@ $button-active-blue: #1669f2;
   justify-content: center;
   align-items: center;
   gap: 3rem;
-
-  margin: auto;
-  width: 100%;
-  height: 100vh;
 }
 
 .google-btn {
-  width: 184px;
-  height: 42px;
+  padding-right: 20px;
   background-color: $google-blue;
   border-radius: 2px;
   box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.25);
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+
   cursor: pointer;
   .google-icon-wrapper {
-    position: absolute;
-    margin-top: 1px;
-    margin-left: 1px;
     width: 40px;
     height: 40px;
     border-radius: 2px;
@@ -83,8 +102,6 @@ $button-active-blue: #1669f2;
     height: 18px;
   }
   .btn-text {
-    float: right;
-    margin: 11px 11px 0 0;
     color: $white;
     font-size: 14px;
     letter-spacing: 0.2px;
@@ -107,6 +124,4 @@ $button-active-blue: #1669f2;
     flex-direction: row;
   }
 }
-
-@import url(https://fonts.googleapis.com/css?family=Roboto:500);
 </style>
