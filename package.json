@@ -1,6 +1,6 @@
 {
   "name": "todo-list",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "dev": "vite",
@@ -9,7 +9,12 @@
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit -p tsconfig.app.json --composite false",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
-    "format": "prettier --write src/"
+    "format": "prettier --write src/",
+    "pretest": "npm install",
+    "test": "npm run lint",
+    "preversion": "npm run test",
+    "version": "",
+    "postversion": "git push && git push --tags && npm publish"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
