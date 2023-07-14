@@ -11,9 +11,9 @@ export default defineConfig({
       registerType: "autoUpdate",
       includeAssets: ["favicon.ico", "apple-touch-icon.png", "masked-icon.svg"],
       manifest: {
-        name: "Vue PWA",
-        short_name: "Vue PWA",
-        description: "Vue PWA",
+        name: "Todo App",
+        short_name: "Todo App",
+        description: "Todo App",
         theme_color: "#ffffff",
         icons: [
           {

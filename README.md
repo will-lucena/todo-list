@@ -1,46 +1,50 @@
-# todo-list
+# [Todo App](https://todo-list-will-lucena.vercel.app/)
 
-This template should help get you started developing with Vue 3 in Vite.
+![Ícone do app](https://github.com/will-lucena/todo-list/blob/main/public/pwa-256x256.png?raw=true)
 
-## Recommended IDE Setup
+## Descrição
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+Aplicativo "Todo" clássico pra gerenciar tarefas com algumas funcionalidades legais a mais
 
-## Type Support for `.vue` Imports in TS
+- versão aplicativo android/ios como pwa
+- tarefas compartilhadas entre dispositivos
+- grupos de tarefas
+- adição de contatos
+- tarefas compartilhadas com contatos
+- tarefas recorrentes
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+## Como usar
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+Se quiser usar somente como um gerenciador de tarefas normais, basta acessar e
+começar a cadastrar e concluir suas tarefas, que ficam armazenadas no próprio dispositivo
 
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+Se quiser usufruir das funcionalides acima listadas, basta fazer login com uma conta
+google e pronto
 
-## Customize configuration
+## Roadmap
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+v1.0.x -> Atual
 
-## Project Setup
+- Todo clássico com tarefas compartilhadas entre dispositivos
+- versão aplicativo android/ios como pwa
 
-```sh
-npm install
-```
+v1.1.x
 
-### Compile and Hot-Reload for Development
+- Será adicionada a versão offline que permite uso sem login e com armazenamento local apenas
 
-```sh
-npm run dev
-```
+v1.2.x
 
-### Type-Check, Compile and Minify for Production
+- Será adicionado a adição de contatos
+- Será adicionado tarefas compartilhadas com contatos
 
-```sh
-npm run build
-```
+v1.3.x
 
-### Lint with [ESLint](https://eslint.org/)
+- Será adicionado grupos de tarefas
 
-```sh
-npm run lint
-```
+v1.4.x
+
+- Será adicionado tarefas recorrentes
+
+### Créditos
+
+[Ícone](https://www.veryicon.com/icons/system/button-ui-requests-5/todo-list-1.html)
