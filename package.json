@@ -1,6 +1,6 @@
 {
   "name": "todo-list",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "scripts": {
     "dev": "vite",
@@ -14,7 +14,7 @@
     "test": "npm run lint",
     "preversion": "npm run test",
     "version": "",
-    "postversion": "git push && git push --tags && npm publish"
+    "postversion": "git push && git push --tags"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
