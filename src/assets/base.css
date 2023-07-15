@@ -93,36 +93,6 @@ body {
   padding-bottom: var(--size-mobile-footer-height);
 }
 
-.button {
-  background: none;
-  border: solid 2px var(--inverse-secondary);
-  color: var(--inverse-secondary);
-  cursor: pointer;
-  display: inline-block;
-  font-family: 'Helvetica', Arial, sans-serif;
-  font-size: 0.75rem;
-  font-weight: bold;
-  outline: none;
-  padding: 8px 16px;
-  text-transform: uppercase;
-  -webkit-transition: all 0.3s;
-  -moz-transition: all 0.3s;
-  -ms-transition: all 0.3s;
-  -o-transition: all 0.3s;
-  transition: all 0.3s;
-}
-
-.button--slim {
-  padding: 4px 8px;
-  border: none;
-  border-bottom: solid 2px var(--inverse-secondary);
-}
-
-.button:hover {
-  background: var(--inverse-tertiary);
-  color: var(--inverse-primary);
-}
-
 @media (min-width: var(--size-mobile-max)) {
   .app{
     max-width: var(--size-desktop-max);

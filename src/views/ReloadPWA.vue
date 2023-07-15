@@ -2,11 +2,12 @@
   <div v-if="offlineReady || needRefresh">
     <div class="app-message">
       <span> {{ appMessage }} </span>
-      <button @click="close" class="button">Ok</button>
+      <Button @click="close">Ok</Button>
     </div>
   </div>
 </template>
 <script setup lang="ts">
+import Button from '@/components/atoms/Button.vue'
 import { useRegisterSW } from 'virtual:pwa-register/vue'
 import { computed } from 'vue'
 const { offlineReady, needRefresh } = useRegisterSW({

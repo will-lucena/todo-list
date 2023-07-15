@@ -3,6 +3,7 @@ import { addToCollection } from '@/api'
 import { TodoListItem } from '@/models'
 import { TaskGroup } from '@/models/TaskGroup'
 import { ref } from 'vue'
+import Button from './Button.vue'
 
 defineProps<{
   friends: Array<string>
@@ -44,7 +45,7 @@ function submit() {
           </option>
         </select>
       </section>
-      <button type="submit">Criar tarefa</button>
+      <Button type="submit">Criar tarefa</Button>
     </form>
   </div>
 </template>

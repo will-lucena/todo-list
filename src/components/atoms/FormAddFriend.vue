@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useUserStore } from '@/stores/user'
 import { ref } from 'vue'
+import Button from './Button.vue'
 
 const emit = defineEmits<{
   (e: 'success'): void
@@ -27,8 +28,7 @@ async function submit() {
   emit('success')
 }
 
-function onClickCancel(event: Event) {
-  event.preventDefault()
+function onClickCancel() {
   email.value = ''
   emit('cancel')
 }
@@ -42,8 +42,8 @@ function onClickCancel(event: Event) {
     </label>
 
     <div class="form__actions">
-      <button type="submit">Adicionar</button>
-      <button type="reset" @click="onClickCancel">Cancelar</button>
+      <Button type="submit">Adicionar</Button>
+      <Button type="reset" @click="onClickCancel">Cancelar</Button>
     </div>
   </form>
 </template>

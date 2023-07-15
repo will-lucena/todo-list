@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { TodoListItem } from '@/models'
 import { computed } from 'vue'
+import Button from '../atoms/Button.vue'
 
 const props = defineProps<{
   items: Array<TodoListItem>
@@ -31,9 +32,9 @@ function onChange(value: any, index: number) {
     <header class="list__header">
       <h2 class="header__title">{{ listTitle }}</h2>
       <div class="list__header header__action_block">
-        <button v-if="showActionButton" @click="emit('actionClick')" class="button button--slim">
+        <Button v-if="showActionButton" @click="emit('actionClick')" slim>
           {{ actionButtonLabel }}
-        </button>
+        </Button>
         <h2 class="header__counter">{{ itemsCount }}</h2>
       </div>
     </header>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { getConfig } from '@/api'
+import Button from '@/components/atoms/Button.vue'
 import ModalCreateTask from '@/components/atoms/ModalCreateTask.vue'
 import Header from '@/components/molecules/Header.vue'
 import { TodoListItem } from '@/models'
@@ -68,15 +69,15 @@ onMounted(() => {
 
   <RouterView @navigateToTask="onNavigateToTask"></RouterView>
 
-  <form @submit.prevent="onClickCreate" class="input__container">
+  <form class="input__container">
     <input type="text" v-model="newTaskTitle" placeholder="Digitar tarefa" />
-    <button type="submit" class="button">Criar tarefa</button>
+    <Button type="submit" @submit="onClickCreate">Criar tarefa</Button>
   </form>
 
   <footer>
-    <button v-if="showCreateSharedTask" @click="showModalCreateTask = !showModalCreateTask">
+    <Button v-if="showCreateSharedTask" @click="showModalCreateTask = !showModalCreateTask">
       {{ detailedTaskButtonLabel }}
-    </button>
+    </Button>
   </footer>
 </template>
 
