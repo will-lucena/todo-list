@@ -49,7 +49,7 @@ const appMessage = computed(() => {
   padding: 2rem 1rem;
   flex-wrap: wrap;
   z-index: 5;
-  background-color: var(--color-black);
+  background-color: var(--surface-dim);
 
   border-radius: 8px;
 }

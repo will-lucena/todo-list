@@ -70,7 +70,7 @@ function onChange(value: any, index: number) {
 
   &__item {
     list-style: none;
-    border-top: 1px dashed var(--inverse-secondary);
+    border-top: 1px dashed var(--on-surface);
     padding: 0.5rem 0;
   }
 }
@@ -79,7 +79,7 @@ input[type='checkbox'] {
   position: relative;
   width: 1rem;
   height: 1rem;
-  border: 1px solid var(--inverse-secondary);
+  border: 1px solid var(--outline);
   border-radius: 4px;
   appearance: none;
   outline: 0;
@@ -94,15 +94,15 @@ input[type='checkbox'] {
     width: 6px;
     height: 10px;
     border-style: solid;
-    border-color: var(--color-white);
+    border-color: var(--outline);
     border-width: 0 2px 2px 0;
     transform: rotate(45deg);
     opacity: 0;
   }
   &:checked {
-    color: var(--color-white);
-    border-color: var(--primary);
-    background: var(--primary);
+    color: var(--on-surface);
+    border-color: var(--outline);
+    background: var(--surface);
     &::before {
       opacity: 1;
     }
@@ -122,11 +122,11 @@ label {
   &::before {
     position: absolute;
     content: attr(data-content);
-    color: var(--color-disabled);
+    color: var(--surface-highest);
     clip-path: polygon(0 0, 0 0, 0% 100%, 0 100%);
     text-decoration: line-through;
     text-decoration-thickness: 3px;
-    text-decoration-color: var(--primary);
+    text-decoration-color: var(--on-surface-variant);
     transition: clip-path 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 }
@@ -146,7 +146,7 @@ label {
       bottom: 10px;
       left: -10px;
       width: 5px;
-      background-color: var(--inverse-quaternary);
+      background-color: var(--outline);
     }
 
     &::after {

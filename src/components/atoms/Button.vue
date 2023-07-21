@@ -48,8 +48,8 @@ function onClick(event: Event) {
 <style lang="scss" scoped>
 .button {
   background: none;
-  border: solid 2px var(--inverse-secondary);
-  color: var(--inverse-secondary);
+  border: solid 2px var(--outline);
+  color: var(--on-surface);
   cursor: pointer;
   display: inline-block;
   font-family: 'Helvetica', Arial, sans-serif;
@@ -68,11 +68,11 @@ function onClick(event: Event) {
 .button--slim {
   padding: 4px 8px;
   border: none;
-  border-bottom: solid 2px var(--inverse-secondary);
+  border-bottom: solid 2px var(--outline);
 }
 
 .button:hover {
-  background: var(--inverse-tertiary);
-  color: var(--inverse-primary);
+  background: var(--on-surface-variant);
+  color: var(--surface);
 }
 </style>

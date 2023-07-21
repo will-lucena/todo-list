@@ -63,7 +63,7 @@ $button-active-blue: #1669f2;
 .title {
   font-size: 2rem;
   font-weight: 700;
-  color: var(--inverse-quaternary);
+  color: var(--on-surface);
 }
 
 .login {

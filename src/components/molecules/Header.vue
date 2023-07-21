@@ -125,7 +125,7 @@ function switchTheme() {
 <style lang="scss" scoped>
 .header {
   &__background {
-    background-color: var(--quaternary);
+    background-color: var(--surface-container);
     padding: 1rem;
 
     display: flex;
@@ -137,7 +137,7 @@ function switchTheme() {
   &__title {
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--inverse-quaternary);
+    color: var(--on-surface);
   }
 
   &__actions {
@@ -153,7 +153,7 @@ function switchTheme() {
   cursor: pointer;
 
   &:hover {
-    color: var(--inverse-secondary);
+    color: var(--on-surface-variant);
   }
 }
 
@@ -169,7 +169,7 @@ function switchTheme() {
 }
 
 .tab {
-  background-color: var(--quaternary);
+  background-color: var(--surface-container);
   list-style: none;
   flex: 1;
   text-align: center;
@@ -178,9 +178,9 @@ function switchTheme() {
   cursor: pointer;
 
   &--active {
-    border-bottom: 1px solid var(--primary);
-    border-top: 1px solid var(--primary);
-    color: var(--primary);
+    border-bottom: 1px solid var(--surface-variant);
+    border-top: 1px solid var(--surface-variant);
+    color: var(--on-surface);
   }
 }
 

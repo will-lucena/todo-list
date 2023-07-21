@@ -90,7 +90,7 @@ onMounted(() => {
   max-width: 1140px;
   margin: 0 auto;
 
-  background-color: var(--quaternary);
+  background-color: var(--surface-container);
   padding: 1rem;
   display: flex;
   flex-direction: row;
@@ -103,8 +103,8 @@ select,
 textarea {
   background: none;
   border: none;
-  border-bottom: solid 2px var(--inverse-secondary);
-  color: var(--inverse-quaternary);
+  border-bottom: solid 2px var(--outline);
+  color: var(--on-surface);
   font-size: 1rem;
   font-weight: 400;
   letter-spacing: 1px;

@@ -70,7 +70,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 .container {
   margin: 2rem 1rem;
-  background: var(--quaternary);
+  background: var(--surface-container);
   border-radius: 5px;
   box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.1);
 
