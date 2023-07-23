@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { currentUser, getConfig } from '@/api'
-
 import { signOut } from '@/api/auth'
-import { TaskGroup } from '@/models/TaskGroup'
+import Header from '@/components/atoms/Header.vue'
+import Tabs from '@/components/atoms/Tabs.vue'
 import { routeNames } from '@/router/routes'
-import { computed, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
 const props = defineProps<{
@@ -24,21 +23,12 @@ const emit = defineEmits<{
   (e: 'navigate', page: string, params: any, tab: number): void
 }>()
 
-const profileImage = ref(currentUser?.photoURL || '')
 let showProfileMenu = ref(false)
 
 const tab = ref(0)
 
-const showTaskGroups = computed(() => {
-  return getConfig('taskGroups')
-})
-
 function onClickProfile() {
   showProfileMenu.value = !showProfileMenu.value
-}
-
-function isActive(index: number) {
-  return index === tab.value
 }
 
 function onClickNavigate(event: string, params: any, index: number) {
@@ -51,7 +41,7 @@ async function onClickLogout() {
   router.push(routeNames.LOGIN.path)
 }
 
-function switchTheme() {
+function onSwitchTheme() {
   var currentTheme = document.documentElement.getAttribute('data-theme')
   var targetTheme = 'light'
 
@@ -74,89 +64,17 @@ function switchTheme() {
       />
     </Transition> -->
 
-    <main class="header__background">
-      <img
-        :src="profileImage"
-        @click="onClickProfile"
-        referrerpolicy="no-referrer"
-        class="avatar"
-      />
+    <Header
+      @expand-profile="onClickProfile"
+      @logout="onClickLogout"
+      @switch-theme="onSwitchTheme"
+    />
 
-      <h1 class="header__title">Todo App</h1>
-
-      <section class="header__actions">
-        <font-awesome-icon
-          icon="fa-solid fa-circle-half-stroke"
-          size="2xl"
-          class="logout-icon"
-          @click="switchTheme"
-        />
-
-        <font-awesome-icon
-          icon="fa-solid fa-arrow-right-from-bracket"
-          size="2xl"
-          class="logout-icon"
-          @click="onClickLogout"
-        />
-      </section>
-    </main>
-    <ul class="tabs">
-      <li
-        class="tab"
-        @click="
-          onClickNavigate(routeNames.TASKS.name, { taskGroupId: TaskGroup.PERSONAL_GROUP_ID }, 0)
-        "
-        :class="{ 'tab--active': isActive(0) }"
-      >
-        Tarefas
-      </li>
-      <li
-        v-if="showTaskGroups"
-        class="tab"
-        @click="onClickNavigate(routeNames.TASK_GROUPS.name, null, 1)"
-        :class="{ 'tab--active': isActive(1) }"
-      >
-        Grupos
-      </li>
-    </ul>
+    <Tabs @navigate="onClickNavigate" :force-tab="forceTab" />
   </div>
 </template>
 
 <style lang="scss" scoped>
-.header {
-  &__background {
-    background-color: var(--surface-container);
-    padding: 1rem;
-
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  &__title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--on-surface);
-  }
-
-  &__actions {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    gap: 2rem;
-  }
-}
-
-.logout-icon {
-  cursor: pointer;
-
-  &:hover {
-    color: var(--on-surface-variant);
-  }
-}
-
 .main {
   display: flex;
   flex-direction: column;

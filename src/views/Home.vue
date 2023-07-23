@@ -2,7 +2,7 @@
 import { getConfig } from '@/api'
 import Button from '@/components/atoms/Button.vue'
 import ModalCreateTask from '@/components/atoms/ModalCreateTask.vue'
-import Header from '@/components/molecules/Header.vue'
+import HeaderGroup from '@/components/molecules/HeaderGroup.vue'
 import { TodoListItem } from '@/models'
 import { TaskGroup } from '@/models/TaskGroup'
 import { routeNames } from '@/router/routes'
@@ -59,7 +59,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <Header @navigate="onNavigate" :forceTab="forceTab"></Header>
+  <HeaderGroup @navigate="onNavigate" :forceTab="forceTab" />
 
   <ModalCreateTask
     v-if="showModalCreateTask"
