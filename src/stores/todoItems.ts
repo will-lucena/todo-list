@@ -8,12 +8,12 @@ export const useTodoItemsStore = defineStore('todoItems', () => {
 
   async function updateItem(index: number, value: Boolean) {
     Object.assign(storedItems.value[index], { completed: value})
-    await Api.INSTANCE.updateCollectionItem(storedItems.value[index])
+    await Api.getInstance().updateCollectionItem(storedItems.value[index])
   }
 
   async function addItem(item: TodoListItem){
     storedItems.value.unshift(item)
-    Api.INSTANCE.addToCollection(item)
+    Api.getInstance().addToCollection(item)
   }
 
   async function loadItems(collectionKey: string, taskGroupId: number) {
@@ -21,7 +21,7 @@ export const useTodoItemsStore = defineStore('todoItems', () => {
       return
     }
     
-    Api.INSTANCE.getCollection(collectionKey).then((res) => {
+    Api.getInstance().getCollection(collectionKey).then((res) => {
       const filteredRes = res.filter((el) => {
         return el.taskGroupId == taskGroupId
       })
@@ -41,7 +41,7 @@ export const useTodoItemsStore = defineStore('todoItems', () => {
     storedItems.value.length = 0
     storedItems.value.push(...array)
     batch.forEach(async element => {
-      await Api.INSTANCE.removeFromCollection(element.key)
+      await Api.getInstance().removeFromCollection(element.key)
     });
   }
 

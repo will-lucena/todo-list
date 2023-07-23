@@ -26,8 +26,8 @@ const login = async (): Promise<Boolean> => {
     const { uid, email, displayName, photoURL } = firebaseUser;
     currentUser = auth.currentUser
 
-    const friends = await Api.INSTANCE.getFriends(email!)
-    const taskGroups = await Api.INSTANCE.getTaskGroups(email!)
+    const friends = await Api.getInstance().getFriends(email!)
+    const taskGroups = await Api.getInstance().getTaskGroups(email!)
     
     const localUser = new User(
       uid,

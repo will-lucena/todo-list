@@ -16,7 +16,7 @@ let selectedGroup = ref(new TaskGroup(''))
 
 function submit() {
   const item = new TodoListItem(title.value, [...sharedWith.value], selectedGroup.value.id)
-  Api.INSTANCE.addToCollection(item)
+  Api.getInstance().addToCollection(item)
 }
 </script>
 

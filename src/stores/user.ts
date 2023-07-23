@@ -9,17 +9,17 @@ export const useUserStore = defineStore('user', () => {
 
   function updateUser(payload: User) {
     Object.assign(user.value, payload)
-    Api.INSTANCE.upsertUsersBase(user.value.getUserCopy())
+    Api.getInstance().upsertUsersBase(user.value.getUserCopy())
   }
 
   async function addFriend(friendEmail: string){
     user.value.addFriend(friendEmail)
-    await Api.INSTANCE.upsertUsersBase(user.value.getUserCopy())
+    await Api.getInstance().upsertUsersBase(user.value.getUserCopy())
   }
 
   async function addGroup(groupName: string){
     user.value.addGroup(new TaskGroup(groupName))
-    await Api.INSTANCE.upsertUsersBase(user.value.getUserCopy())
+    await Api.getInstance().upsertUsersBase(user.value.getUserCopy())
   }
 
   return { user: user.value, updateUser, addFriend, addGroup }

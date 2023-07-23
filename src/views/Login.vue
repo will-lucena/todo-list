@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { createAccount, getConfig, login } from '@/api/firebaseApi/'
+import List from '@/components/organisms/List.vue'
 import { APIs, Api } from '@/models/Api'
 import { routeNames } from '@/router/routes'
 import { computed } from 'vue'
@@ -50,7 +51,9 @@ const allowOfflineUsers = computed(() => {
       </div>
     </div>
 
-    <section v-if="allowOfflineUsers"></section>
+    <section v-if="allowOfflineUsers">
+      <List />
+    </section>
   </main>
 </template>
 
