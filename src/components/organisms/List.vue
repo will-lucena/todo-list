@@ -1,12 +1,8 @@
 <script setup lang="ts">
-import { currentUser } from '@/api/firebaseApi'
 import TodoItemList from '@/components/molecules/TodoItemList.vue'
 import { TodoListItem } from '@/models'
 import { useTodoItemsStore } from '@/stores/todoItems'
-import { computed, onMounted } from 'vue'
-const props = defineProps<{
-  taskGroupId: string | number
-}>()
+import { computed } from 'vue'
 
 const todoItemsStore = useTodoItemsStore()
 
@@ -38,12 +34,6 @@ function onChangeItem(source: Array<TodoListItem>, index: number, value: boolean
   const sourceIndex = todoItemsStore.storedItems.findIndex((el) => el.key === source[index].key)
   todoItemsStore.updateItem(sourceIndex, value)
 }
-
-onMounted(() => {
-  if (currentUser) {
-    todoItemsStore.loadItems(currentUser.email!, Number(props.taskGroupId))
-  }
-})
 </script>
 
 <template>

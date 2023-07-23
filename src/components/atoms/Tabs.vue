@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getConfig } from '@/api'
+import { getConfig } from '@/api/firebaseApi'
 
 import { TaskGroup } from '@/models/TaskGroup'
 import { routeNames } from '@/router/routes'

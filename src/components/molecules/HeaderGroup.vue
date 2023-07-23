@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { signOut } from '@/api/auth'
+import { signOut } from '@/api/firebaseApi'
 import Header from '@/components/atoms/Header.vue'
 import Tabs from '@/components/atoms/Tabs.vue'
 import { routeNames } from '@/router/routes'

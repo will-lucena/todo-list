@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { currentUser, getConfig } from '@/api'
-import { signOut } from '@/api/auth'
+import { currentUser, getConfig, signOut } from '@/api/firebaseApi'
 import FormAddFriend from '@/components/atoms/FormAddFriend.vue'
 import FormCreateTaskGroup from '@/components/atoms/FormCreateTaskGroup.vue'
 import { routeNames } from '@/router/routes'

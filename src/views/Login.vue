@@ -1,20 +1,28 @@
 <script setup lang="ts">
-import { createAccount, login } from '@/api'
+import { createAccount, getConfig, login } from '@/api/firebaseApi/'
+import { APIs, Api } from '@/models/Api'
 import { routeNames } from '@/router/routes'
+import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 const router = useRouter()
 
 function onClickLogin() {
+  Api.setInstance(APIs.FIREBASE)
   login().then(() => {
     router.push(routeNames.HOME.path)
   })
 }
 
 function onClickSignin() {
+  Api.setInstance(APIs.FIREBASE)
   createAccount().then(() => {
     router.push(routeNames.HOME.path)
   })
 }
+
+const allowOfflineUsers = computed(() => {
+  return getConfig('localstorageOnly')
+})
 </script>
 
 <template>
@@ -41,6 +49,8 @@ function onClickSignin() {
         <p class="btn-text"><b>Sign in with google</b></p>
       </div>
     </div>
+
+    <section v-if="allowOfflineUsers"></section>
   </main>
 </template>
 

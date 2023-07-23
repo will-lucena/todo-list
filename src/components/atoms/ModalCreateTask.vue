@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { addToCollection } from '@/api'
 import { TodoListItem } from '@/models'
+import { Api } from '@/models/Api'
 import { TaskGroup } from '@/models/TaskGroup'
 import { ref } from 'vue'
 import Button from './Button.vue'
@@ -16,7 +16,7 @@ let selectedGroup = ref(new TaskGroup(''))
 
 function submit() {
   const item = new TodoListItem(title.value, [...sharedWith.value], selectedGroup.value.id)
-  addToCollection(item)
+  Api.INSTANCE.addToCollection(item)
 }
 </script>
 

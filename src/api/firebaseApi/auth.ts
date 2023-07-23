@@ -2,10 +2,9 @@
 import { User } from "@/models";
 import { GoogleAuthProvider, browserLocalPersistence, signOut as firebaseSignOut, getAuth, setPersistence, signInWithPopup } from "firebase/auth";
 
+import { Api } from '@/models/Api';
 import { TaskGroup } from '@/models/TaskGroup';
 import { useUserStore } from '@/stores/user';
-import { getFriends } from '.';
-import { getTaskGroups } from './collections';
 import { app } from "./setup";
 const auth = getAuth(app);
 auth.useDeviceLanguage();
@@ -27,8 +26,8 @@ const login = async (): Promise<Boolean> => {
     const { uid, email, displayName, photoURL } = firebaseUser;
     currentUser = auth.currentUser
 
-    const friends = await getFriends(email!)
-    const taskGroups = await getTaskGroups(email!)
+    const friends = await Api.INSTANCE.getFriends(email!)
+    const taskGroups = await Api.INSTANCE.getTaskGroups(email!)
     
     const localUser = new User(
       uid,

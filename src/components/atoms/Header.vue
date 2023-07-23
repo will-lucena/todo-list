@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { currentUser } from '@/api'
+import { currentUser } from '@/api/firebaseApi'
 
 import { ref } from 'vue'
 

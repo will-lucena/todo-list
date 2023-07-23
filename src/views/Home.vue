@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getConfig } from '@/api'
+import { getConfig } from '@/api/firebaseApi'
 import Button from '@/components/atoms/Button.vue'
 import ModalCreateTask from '@/components/atoms/ModalCreateTask.vue'
 import HeaderGroup from '@/components/molecules/HeaderGroup.vue'

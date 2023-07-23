@@ -1,23 +1,27 @@
 <script setup lang="ts">
+import { currentUser } from '@/api/firebaseApi'
+import { Api, APIs } from '@/models/Api'
 import { onMounted } from 'vue'
 import { RouterView, useRouter } from 'vue-router'
-import { currentUser, getFriends } from './api'
 const router = useRouter()
 
+import { User } from '@/models'
 import { routeNames } from '@/router/routes'
-import { getTaskGroups } from './api/collections'
-import { User } from './models'
-import { useUserStore } from './stores/user'
-import ReloadPWA from './views/ReloadPWA.vue'
+import { useUserStore } from '@/stores/user'
+
+import ReloadPWA from '@/views/ReloadPWA.vue'
 
 const userStore = useUserStore()
 
 onMounted(async () => {
+  Api.setInstance(APIs.LOCALSTORAGE)
+
   if (!currentUser) {
     router.push(routeNames.LOGIN.path)
   } else {
-    const friends = await getFriends(currentUser.email!)
-    const taskGroups = await getTaskGroups(currentUser.email!)
+    Api.setInstance(APIs.FIREBASE)
+    const friends = await Api.getInstance().getFriends(currentUser.email!)
+    const taskGroups = await Api.getInstance().getTaskGroups(currentUser.email!)
     const user = new User(
       currentUser.uid,
       currentUser.email!,
