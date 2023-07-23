@@ -3,7 +3,7 @@ const props = defineProps({
   label: {
     type: String
   },
-  buttonType: {
+  type: {
     type: String as () => 'submit' | 'reset' | 'button' | undefined,
     default: 'button',
     validator(value: string) {
@@ -21,7 +21,7 @@ const emit = defineEmits<{
 
 function onClick(event: Event) {
   event.preventDefault()
-  if (props.buttonType === 'submit') {
+  if (props.type === 'submit') {
     emit('submit')
     return
   }
@@ -32,7 +32,7 @@ function onClick(event: Event) {
 
 <template>
   <button
-    :type="buttonType"
+    :type="type"
     @click="onClick"
     class="button"
     :class="{
