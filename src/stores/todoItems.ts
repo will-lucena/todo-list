@@ -20,7 +20,7 @@ export const useTodoItemsStore = defineStore('todoItems', () => {
     if (storedItems.value.length > 0){
       return
     }
-    
+
     Api.getInstance().getCollection(collectionKey).then((res) => {
       const filteredRes = res.filter((el) => {
         return el.taskGroupId == taskGroupId
