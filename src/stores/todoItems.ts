@@ -45,5 +45,9 @@ export const useTodoItemsStore = defineStore('todoItems', () => {
     });
   }
 
-  return { storedItems: storedItems.value, updateItem, addItem, loadItems, completeBatch, deleteBatch }
+  function resetStore(){
+    storedItems.value.length = 0
+  }
+
+  return { storedItems: storedItems.value, updateItem, addItem, loadItems, completeBatch, deleteBatch, resetStore }
 })

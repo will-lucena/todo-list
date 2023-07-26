@@ -19,6 +19,7 @@ function onClickCreate(item: TodoListItem) {
 function onClickLogin() {
   Api.setInstance(APIs.FIREBASE)
   login().then(() => {
+    todoItemsStore.resetStore()
     router.push(routeNames.HOME.path)
   })
 }
@@ -35,6 +36,7 @@ const allowOfflineUsers = computed(() => {
 })
 
 onMounted(() => {
+  Api.setInstance(APIs.LOCALSTORAGE)
   todoItemsStore.loadItems('', 0)
 })
 </script>

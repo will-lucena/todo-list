@@ -3,6 +3,7 @@ import { signOut } from '@/api/firebaseApi'
 import Header from '@/components/atoms/Header.vue'
 import Tabs from '@/components/atoms/Tabs.vue'
 import { routeNames } from '@/router/routes'
+import { useTodoItemsStore } from '@/stores/todoItems'
 import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
@@ -38,6 +39,7 @@ function onClickNavigate(event: string, params: any, index: number) {
 
 async function onClickLogout() {
   await signOut()
+  useTodoItemsStore().resetStore()
   router.push(routeNames.LOGIN.path)
 }
 
