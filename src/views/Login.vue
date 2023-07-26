@@ -1,11 +1,20 @@
 <script setup lang="ts">
 import { createAccount, getConfig, login } from '@/api/firebaseApi/'
+import CreateTaskForm from '@/components/molecules/CreateTaskForm.vue'
 import List from '@/components/organisms/List.vue'
+import { TodoListItem } from '@/models'
 import { APIs, Api } from '@/models/Api'
 import { routeNames } from '@/router/routes'
-import { computed } from 'vue'
+import { useTodoItemsStore } from '@/stores/todoItems'
+import { computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 const router = useRouter()
+
+const todoItemsStore = useTodoItemsStore()
+
+function onClickCreate(item: TodoListItem) {
+  todoItemsStore.addItem(item)
+}
 
 function onClickLogin() {
   Api.setInstance(APIs.FIREBASE)
@@ -23,6 +32,10 @@ function onClickSignin() {
 
 const allowOfflineUsers = computed(() => {
   return getConfig('localstorageOnly')
+})
+
+onMounted(() => {
+  todoItemsStore.loadItems('', 0)
 })
 </script>
 
@@ -51,8 +64,10 @@ const allowOfflineUsers = computed(() => {
       </div>
     </div>
 
-    <section v-if="allowOfflineUsers">
+    <section v-if="!allowOfflineUsers" class="list__container">
       <List />
+
+      <CreateTaskForm @handle-created-item="onClickCreate" />
     </section>
   </main>
 </template>
@@ -130,6 +145,10 @@ $button-active-blue: #1669f2;
   &:active {
     background: $button-active-blue;
   }
+}
+
+.list__container {
+  width: 100%;
 }
 
 @media (min-width: 500px) {

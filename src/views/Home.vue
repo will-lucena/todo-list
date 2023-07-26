@@ -2,6 +2,7 @@
 import { getConfig } from '@/api/firebaseApi'
 import Button from '@/components/atoms/Button.vue'
 import ModalCreateTask from '@/components/atoms/ModalCreateTask.vue'
+import CreateTaskForm from '@/components/molecules/CreateTaskForm.vue'
 import HeaderGroup from '@/components/molecules/HeaderGroup.vue'
 import { TodoListItem } from '@/models'
 import { TaskGroup } from '@/models/TaskGroup'
@@ -11,7 +12,6 @@ import { useUserStore } from '@/stores/user'
 import { computed, onMounted, ref } from 'vue'
 import { RouterView, useRouter } from 'vue-router'
 
-let newTaskTitle = ref('')
 let showModalCreateTask = ref(false)
 let forceTab = ref(0)
 const router = useRouter()
@@ -23,10 +23,8 @@ const showCreateSharedTask = computed(() => {
   return getConfig('createSharedTask')
 })
 
-function onClickCreate() {
-  const task = new TodoListItem(newTaskTitle.value, undefined, 0)
-  todoItemsStore.addItem(task)
-  newTaskTitle.value = ''
+function onClickCreate(item: TodoListItem) {
+  todoItemsStore.addItem(item)
 }
 
 function onNavigate(page: string, params: any, tab: number) {
@@ -42,16 +40,7 @@ const detailedTaskButtonLabel = computed(() => {
   return showModalCreateTask.value ? 'Fechar' : 'Criar tarefa compartilhada'
 })
 
-function setTheme() {
-  var storedTheme =
-    localStorage.getItem('theme') ||
-    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
-  if (storedTheme) document.documentElement.setAttribute('data-theme', storedTheme)
-}
-
 onMounted(() => {
-  setTheme()
-
   setTimeout(() => {
     onNavigate(routeNames.TASKS.name, { taskGroupId: TaskGroup.PERSONAL_GROUP_ID }, 0)
   }, 1000)
@@ -69,10 +58,7 @@ onMounted(() => {
 
   <RouterView @navigateToTask="onNavigateToTask"></RouterView>
 
-  <form class="input__container">
-    <input type="text" v-model="newTaskTitle" placeholder="Digitar tarefa" />
-    <Button type="submit" @submit="onClickCreate">Criar tarefa</Button>
-  </form>
+  <CreateTaskForm @handle-created-item="onClickCreate" />
 
   <footer>
     <Button v-if="showCreateSharedTask" @click="showModalCreateTask = !showModalCreateTask">
@@ -80,57 +66,3 @@ onMounted(() => {
     </Button>
   </footer>
 </template>
-
-<style lang="scss" scoped>
-.input__container {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-
-  max-width: 1140px;
-  margin: 0 auto;
-
-  background-color: var(--surface-container);
-  padding: 1rem;
-  display: flex;
-  flex-direction: row;
-  gap: 1rem;
-}
-
-input[type='text'],
-[type='email'],
-select,
-textarea {
-  background: none;
-  border: none;
-  border-bottom: solid 2px var(--outline);
-  color: var(--on-surface);
-  font-size: 1rem;
-  font-weight: 400;
-  letter-spacing: 1px;
-  width: 100%;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -ms-box-sizing: border-box;
-  -o-box-sizing: border-box;
-  box-sizing: border-box;
-  -webkit-transition: all 0.3s;
-  -moz-transition: all 0.3s;
-  -ms-transition: all 0.3s;
-  -o-transition: all 0.3s;
-  transition: all 0.3s;
-}
-
-input[type='text']:focus,
-[type='email']:focus,
-textarea:focus {
-  outline: none;
-  padding: 0 0 0.875rem 0;
-}
-
-@media (min-width: 500px) {
-  .input__container {
-    flex-direction: column;
-  }
-}
-</style>
