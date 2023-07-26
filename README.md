@@ -23,25 +23,25 @@ google e pronto
 
 ## Roadmap
 
-v1.0.x -> Atual
+v1.x.x
 
 - Todo clássico com tarefas compartilhadas entre dispositivos
 - versão aplicativo android/ios como pwa
 
-v1.1.x
+v2.x.x -> Atual
 
 - Será adicionada a versão offline que permite uso sem login e com armazenamento local apenas
 
-v1.2.x
+v3.x.x
 
 - Será adicionado a adição de contatos
 - Será adicionado tarefas compartilhadas com contatos
 
-v1.3.x
+v4.x.x
 
 - Será adicionado grupos de tarefas
 
-v1.4.x
+v5.x.x
 
 - Será adicionado tarefas recorrentes
 
